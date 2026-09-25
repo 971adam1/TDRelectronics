@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TDR Electronic | Certified Preowned Phones in Dubai</title>
+<meta name="description" content="Certified preowned iPhones, Samsung and accessories in Al Baraha, Deira. Graded A to C, tested on 12 points, 12 month warranty, same day delivery across Dubai.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C1524">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/v5.css">
+<link rel="stylesheet" href="assets/css/v6.css">
+<link rel="stylesheet" href="assets/css/i18n.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".26" stop-color="#fff" stop-opacity=".06"/>
+    <stop offset=".55" stop-color="#000" stop-opacity=".10"/><stop offset=".80" stop-color="#fff" stop-opacity=".05"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".22"/></linearGradient>
+  <linearGradient id="rail" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity=".12"/>
+    <stop offset="1" stop-color="#fff" stop-opacity=".42"/></linearGradient>
+  <radialGradient id="lens" cx=".35" cy=".3" r=".85">
+    <stop offset="0" stop-color="#5c6b80"/><stop offset=".45" stop-color="#1a222e"/><stop offset="1" stop-color="#080c12"/></radialGradient>
+  <linearGradient id="plate" x1="0" y1="0" x2=".8" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#000" stop-opacity=".14"/></linearGradient>
+  <radialGradient id="grnd" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#0C1524" stop-opacity=".30"/><stop offset="1" stop-color="#0C1524" stop-opacity="0"/></radialGradient>
+</defs></svg>
+
+<button class="ifab" id="insightFab">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/></svg><span data-i18n="ui.insight">Insight</span>
+</button>
+<div class="ip" id="insightPanel" hidden>
+  <div class="ip__hd"><b data-i18n="ui.captured">Captured this session</b><button id="ipClose" aria-label="Close" data-i18n-al="f.close">&times;</button></div>
+  <div class="ip__st"><div><span id="ipLeads">0</span><em data-i18n="ui.leads">Leads</em></div><div><span id="ipSignals">0</span><em data-i18n="ui.signals">Signals</em></div><div><span id="ipValue">0</span><em data-i18n="ui.pipeline">Pipeline</em></div></div>
+  <ul class="ip__log" id="ipLog"><li class="ip__e" data-i18n="ui.insightP">Click around to see what the site records.</li></ul>
+  <p class="ip__n" data-i18n="ui.insightS">Each dashed marker earns data, not just a sale.</p>
+</div>
+
+<div class="anno"><div class="anno__t" id="annoTrack"></div></div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <button class="burger" id="burger" aria-label="Menu" data-i18n-al="nav.menu"><span></span><span></span><span></span></button>
+    <a class="wm" href="#top" aria-label="TDR Electronic">
+      <span class="wm__r" aria-hidden="true"><span>T</span><span class="wm__d">D</span><span>R</span></span>
+      <span class="wm__s" aria-hidden="true">ELECTRONIC</span>
+    </a>
+    <form class="srch" id="searchForm" data-capture="Search query. Shows demand for models you do not stock yet.">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="searchInput" type="search" placeholder="Search iPhone 15, Galaxy S23" data-i18n-ph="nav.searchPh" autocomplete="off">
+      <div class="srch__d" id="searchDrop" hidden></div>
+    </form>
+    <div class="hdr__a">
+      <div class="lang" id="lang">
+        <button class="lang__b" id="langBtn" aria-haspopup="true" aria-expanded="false" aria-label="Language">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+          <b id="langNow">EN</b>
+        </button>
+        <div class="lang__m" id="langMenu" hidden></div>
+      </div>
+      <button class="ib ib--srch" id="srchToggle" aria-label="Search" data-i18n-al="nav.search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button class="ib" id="wishBtn" aria-label="Wishlist" data-i18n-al="nav.wish"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9z"/></svg><b class="bdg zero" id="wishCount">0</b></button>
+      <button class="ib" id="cartBtn" aria-label="Cart" data-i18n-al="nav.cart"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 2H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/></svg><b class="bdg zero" id="cartCount">0</b></button>
+    </div>
+  </div>
+  <nav class="nav" id="nav"><div class="wrap nav__in">
+    <a href="#shop" data-filter="Apple" data-i18n="nav.iphone">iPhone</a><a href="#shop" data-filter="Samsung" data-i18n="nav.samsung">Samsung</a>
+    <a href="#shop" data-filter="all" data-i18n="nav.all">All phones</a><a href="#grades" data-i18n="nav.grades">Condition guide</a>
+    <a href="#tradein" class="hot" data-i18n="nav.tradein">Trade in</a><a href="#finder" data-i18n="nav.finder">Phone finder</a><a href="#visit" data-i18n="nav.visit">Visit us</a>
+    <span class="nav__ph">Dubai · <a href="tel:+971506711885">+971 50 6711885</a></span>
+  </div></nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap hero__in">
+
+    <div class="hero__c">
+      <span class="eyb eyb--l"><i></i><span data-i18n="hero.eyb">Al Baraha, Deira &middot; Since 2019</span></span>
+      <h1><span data-i18n="hero.h1a">Premium phones,</span><br><span data-i18n="hero.h1b">half the price.</span></h1>
+      <p data-i18n="hero.sub">Every phone tested and graded before it reaches you.</p>
+      <ul class="hero__t">
+        <li><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span data-i18n="trust.warranty">12 month warranty</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/></svg><span data-i18n="trust.delivery">Free delivery</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 20v-5h5"/></svg><span data-i18n="trust.returns">10 day returns</span></li>
+      </ul>
+      <div class="hero__cta">
+        <a class="btn btn--p btn--l" href="#shop" data-i18n="hero.cta">Shop all phones</a>
+      </div>
+      <p class="hero__pf"><span class="hero__st" aria-hidden="true">★★★★★</span>
+        <b data-i18n="hero.rating">4.8 out of 5</b> <span data-i18n="hero.ratingFrom">from 2,140 Dubai customers</span></p>
+    </div>
+
+    <div class="hero__m">
+      <div class="deal" id="deal">
+        <div class="deal__pg" id="dealPg"></div>
+        <div class="deal__vp"><div class="deal__tr" id="dealTrack"></div></div>
+        <button class="deal__nv deal__nv--p" id="dealPrev" aria-label="Previous deal" data-i18n-al="ui.prev"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="deal__nv deal__nv--n" id="dealNext" aria-label="Next deal" data-i18n-al="ui.next"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+
+      <!-- trade in, sitting directly beside the deals -->
+      <section class="tin2" id="tin2" data-capture="Trade in starter. Captures the model they own before anything else is asked.">
+        <div class="tin2__hd">
+          <span class="tin2__ic" aria-hidden="true">
+            <i class="tin2__glyph" aria-hidden="true"></i>
+          </span>
+          <div>
+            <b data-i18n="tin.title">Trade in your old phone</b>
+            <i data-i18n="tin.sub">Pay less, or take the cash</i>
+          </div>
+        </div>
+
+        <figure class="tin2__ph">
+          <img src="assets/img/tradein-hero.webp" alt="An older phone being handed over in exchange for a new one in its box" loading="lazy" decoding="async" width="2000" height="723">
+          <figcaption><span data-i18n="tin.old">Your old phone</span><span data-i18n="tin.new">A newer one</span></figcaption>
+        </figure>
+
+        <div class="tin2__q">
+          <label id="tin2Lbl">Which phone do you have?</label>
+          <div class="tin2__head" id="tin2Head"></div>
+          <div class="tin2__opts" id="tin2Opts"></div>
+          <p class="tin2__step"><b id="tin2Step">Step 1 of 3</b><span id="tin2Hint">Tap your brand, takes ten seconds</span></p>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</section>
+
+<section class="orail">
+  <div class="orail__h wrap"><b data-i18n="ui.moreDeals">More deals ending soon</b><span data-i18n="ui.tapOpen">Tap any to open</span></div>
+  <div class="orail__vp"><div class="orail__t" id="offerTrack"></div></div>
+</section>
+
+<div class="tr"><div class="wrap tr__in">
+  <div><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg><b data-i18n="trust.warranty">12 month warranty</b><i data-i18n="trust.warrantySub">Every graded phone</i></div>
+  <div><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/></svg><b data-i18n="trust.delivery">Free delivery</b><i data-i18n="trust.deliverySub">Same day in Dubai</i></div>
+  <div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 20v-5h5"/></svg><b data-i18n="trust.returns">10 day returns</b><i data-i18n="trust.returnsSub">No questions asked</i></div>
+  <div><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg><b data-i18n="trust.pay4">Pay in 4</b><i><img class="tby" src="assets/img/logo/tabby.webp" alt="Tabby"> <span data-i18n="trust.pay4Sub">interest free</span></i></div>
+</div></div>
+
+<div class="brands"><div class="wrap brands__in"><span data-i18n="ui.brands">Brands we carry</span><img src="assets/img/logo/apple.svg" alt="Apple"><img class="bw" src="assets/img/logo/samsung.png" alt="Samsung"></div></div>
+
+<section class="sec sec--tight">
+  <div class="wrap"><div class="rail" id="catRail">
+    <a class="rc" href="#shop" data-filter="Apple"><div class="rc__d" data-dev="ip15p"></div><img class="rc__lg" src="assets/img/logo/apple.svg" alt=""><b data-i18n="nav.iphone">iPhone</b><i><span data-i18n="price.fromShort">From</span> 519</i></a>
+    <a class="rc" href="#shop" data-filter="Samsung"><div class="rc__d" data-dev="s23u"></div><img class="rc__lg rc__lg--w" src="assets/img/logo/samsung.png" alt=""><b data-i18n="nav.samsung">Samsung</b><i><span data-i18n="price.fromShort">From</span> 949</i></a>
+    <a class="rc" href="#shop" data-filter="new"><div class="rc__d" data-dev="ip16p"></div><b data-i18n="rail.new">Brand new</b><i data-i18n="rail.newSub">Sealed</i></a>
+    <a class="rc rc--acc" href="#shop"><div class="rc__i"><svg viewBox="0 0 24 24"><circle cx="7" cy="16" r="4"/><circle cx="17" cy="16" r="4"/><path d="M7 12V6h10v6"/></svg></div><b data-i18n="rail.acc">Accessories</b><i><span data-i18n="price.fromShort">From</span> 19</i></a>
+    <a class="rc rc--gold" href="#tradein"><div class="rc__i"><svg viewBox="0 0 24 24"><path d="M4 8h16l-4-4M20 16H4l4 4"/></svg></div><b data-i18n="rail.tradein">Trade in</b><i data-i18n="rail.tradeinSub">Cash today</i></a>
+    <a class="rc rc--acc" href="#finder"><div class="rc__i"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3 2.5V13"/><path d="M12 17h.01"/></svg></div><b data-i18n="nav.finder">Phone finder</b><i data-i18n="rail.quick">30 seconds</i></a>
+  </div></div>
+</section>
+
+<section class="sec sec--pap" id="shop">
+  <div class="wrap">
+    <header class="sh">
+      <div><h2 data-i18n="grid.h2">In stock right now</h2><p data-i18n="grid.sub">Hover a colour to see the finish. Prices include VAT and warranty.</p></div>
+    </header>
+    <div class="fl" id="filters" data-capture="Filter use. Tells you which brands and budgets your traffic wants.">
+      <button class="on" data-f="all" data-i18n="grid.all">All</button><button data-f="Apple" data-i18n="nav.iphone">iPhone</button>
+      <button data-f="Samsung" data-i18n="nav.samsung">Samsung</button><button data-f="under1500" data-i18n="grid.under">Under 1500</button><button data-f="new" data-i18n="card.new">Brand new</button>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="more"><button class="btn btn--o" id="loadMore" data-i18n="grid.more">Show more phones</button></div>
+  </div>
+</section>
+
+<section class="chk">
+  <div class="chk__bg"><img src="assets/img/workshop-sm.jpg" srcset="assets/img/workshop-sm.jpg 1000w, assets/img/workshop.jpg 2400w" sizes="100vw" loading="lazy" alt=""></div>
+  <div class="wrap chk__in">
+    <div class="chk__c">
+      <span class="eyb eyb--l"><i></i><span data-i18n="chk.eyb">Before it reaches you</span></span>
+      <h2><span data-i18n="chk.h2a">Twelve points.</span><br><span data-i18n="chk.h2b">Every single phone.</span></h2>
+      <p data-i18n="chk.p">New or preowned, nothing leaves the bench until it passes. If one point fails, the phone does not go on sale.</p>
+      <a class="btn btn--w btn--l" href="#grades" data-i18n="chk.cta">See the condition guide</a>
+    </div>
+    <ol class="chk__l">
+      <li data-i18n="chk.1">Screen and touch</li><li data-i18n="chk.2">Battery health</li><li data-i18n="chk.3">Rear cameras</li><li data-i18n="chk.4">Front camera</li>
+      <li data-i18n="chk.5">Speakers</li><li data-i18n="chk.6">Microphones</li><li data-i18n="chk.7">Charging port</li><li data-i18n="chk.8">All buttons</li>
+      <li data-i18n="chk.9">Face ID or fingerprint</li><li data-i18n="chk.10">Network and SIM</li><li data-i18n="chk.11">Wi Fi</li><li data-i18n="chk.12">Bluetooth</li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="grades">
+  <div class="wrap">
+    <header class="sh"><div><h2 data-i18n="gr.h2">Pick your condition, pick your price</h2>
+      <p data-i18n="gr.sub">The same iPhone 13 Pro Max at three grades. You decide how much cosmetic wear is worth saving on.</p></div></header>
+    <div class="gr">
+      <article class="gc"><div class="gc__h"><span class="gl">A</span><div><b data-i18n="gr.a">Excellent</b><i data-i18n="gr.aSub">Like new</i></div></div>
+        <div class="gc__p"><i class="dh"></i>1,569</div>
+        <ul><li><span data-i18n="gr.cosmetic">Cosmetic</span><i class="mt"><b style="--v:97%"></b></i><em>97</em></li>
+          <li><span data-i18n="gr.battery">Battery</span><i class="mt"><b style="--v:92%"></b></i><em>90+</em></li>
+          <li><span data-i18n="gr.function">Function</span><i class="mt"><b style="--v:100%"></b></i><em data-i18n="gr.full">Full</em></li></ul>
+        <p data-i18n="gr.aTxt">No visible marks on the frame or screen. Presents as new in the hand.</p></article>
+      <article class="gc is-p"><span class="gt" data-i18n="gr.chosen">Most chosen</span>
+        <div class="gc__h"><span class="gl">B</span><div><b data-i18n="gr.b">Very good</b><i data-i18n="gr.bSub">Light wear</i></div></div>
+        <div class="gc__p"><i class="dh"></i>1,529</div>
+        <ul><li><span data-i18n="gr.cosmetic">Cosmetic</span><i class="mt"><b style="--v:82%"></b></i><em>82</em></li>
+          <li><span data-i18n="gr.battery">Battery</span><i class="mt"><b style="--v:87%"></b></i><em>85+</em></li>
+          <li><span data-i18n="gr.function">Function</span><i class="mt"><b style="--v:100%"></b></i><em data-i18n="gr.full">Full</em></li></ul>
+        <p data-i18n="gr.bTxt">Faint marks you would need to look for. Screen stays clean and clear.</p></article>
+      <article class="gc"><div class="gc__h"><span class="gl">C</span><div><b data-i18n="gr.c">Good</b><i data-i18n="gr.cSub">Honest wear</i></div></div>
+        <div class="gc__p"><i class="dh"></i>1,459</div>
+        <ul><li><span data-i18n="gr.cosmetic">Cosmetic</span><i class="mt"><b style="--v:64%"></b></i><em>64</em></li>
+          <li><span data-i18n="gr.battery">Battery</span><i class="mt"><b style="--v:82%"></b></i><em>80+</em></li>
+          <li><span data-i18n="gr.function">Function</span><i class="mt"><b style="--v:100%"></b></i><em data-i18n="gr.full">Full</em></li></ul>
+        <p data-i18n="gr.cTxt">Scratches or small dents you can see. Works exactly as it should.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--ink" id="tradein">
+  <div class="wrap tin">
+    <div class="tin__c">
+      <span class="eyb eyb--l"><i></i><span data-i18n="tin2.eyb">Sell or trade in</span></span>
+      <h2 data-i18n="tin2.h2">Turn your old phone into cash</h2>
+      <p data-i18n="tin2.p">Tell us the brand and the condition. One of the team messages you on WhatsApp and agrees a price with you directly.</p>
+      <ul class="tin__l">
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg><span data-i18n="tin2.l1">No account and no obligation</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg><span data-i18n="tin2.l2">We collect from your door across Dubai</span></li>
+        <li><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg><span data-i18n="tin2.l3">Cash on the spot or credit against a newer phone</span></li>
+      </ul>
+    </div>
+    <!-- The price is agreed on WhatsApp, not quoted here, so this panel sells
+         certainty instead of a number. Knowing exactly what happens next is what
+         replaces the figure as the reason to finish. -->
+    <div class="tin__b tin__b--how">
+      <span class="mono" data-i18n="tin2.how">How it works</span>
+      <ol class="hw">
+        <li><b>1</b><div><strong data-i18n="tin2.s1">Pick your brand and condition</strong><span data-i18n="tin2.s1s">Two taps, no account, no forms to read</span></div></li>
+        <li><b>2</b><div><strong data-i18n="tin2.s2">We message you on WhatsApp</strong><span data-i18n="tin2.s2s">A couple of quick questions about the phone</span></div></li>
+        <li><b>3</b><div><strong data-i18n="tin2.s3">We agree a price together</strong><span data-i18n="tin2.s3s">Talk to a real person, not a calculator</span></div></li>
+        <li><b>4</b><div><strong data-i18n="tin2.s4">Cash or credit, your choice</strong><span data-i18n="tin2.s4s">Bring it in, or we collect from your door</span></div></li>
+      </ol>
+      <a class="btn btn--p btn--full" href="#tin2" id="tinJump" data-i18n="tin2.cta">Start now, takes ten seconds</a>
+      <p class="fine" data-i18n="tin.hours">Open every day 10:00 to midnight. Fridays from 16:00.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--pap" id="finder">
+  <div class="wrap">
+    <header class="sh"><div><h2 data-i18n="fin.h2">Not sure which phone?</h2><p data-i18n="fin.sub">Three questions and we shortlist from live stock.</p></div></header>
+    <div class="fin" data-capture="Preference profile. Budget band, priority feature and brand lean. Powers segmented remarketing.">
+      <div class="fin__q"><label data-i18n="fin.budget">What is your budget?</label>
+        <div class="fin__sl"><input type="range" id="finBudget" min="400" max="4000" step="100" value="1500">
+          <output><span data-i18n="fin.upto">Up to</span> <i class="dh"></i><b id="finBudgetOut">1,500</b></output></div></div>
+      <div class="fin__q"><label data-i18n="fin.matters">What matters most?</label>
+        <div class="ch" id="finPriority"><button data-v="camera" data-i18n="fin.camera">Camera</button><button data-v="battery" data-i18n="fin.batt">Battery life</button>
+          <button data-v="gaming" data-i18n="fin.speed">Speed and gaming</button><button data-v="basic" data-i18n="fin.basics">Just the basics</button></div></div>
+      <div class="fin__q"><label data-i18n="fin.brand">Brand preference?</label>
+        <div class="ch" id="finBrand"><button data-v="any" class="on" data-i18n="fin.any">No preference</button>
+          <button data-v="Apple">Apple</button><button data-v="Samsung" data-i18n="nav.samsung">Samsung</button></div></div>
+      <div class="fin__o" id="finOut"></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="visit">
+  <div class="wrap">
+    <header class="sh"><div><h2 data-i18n="vis.h2">Come in, or we come to you</h2>
+      <p data-i18n="vis.p">The counter is in Al Baraha, Deira. If you would rather not travel, we bring the stock to your door.</p></div></header>
+    <div class="vis">
+      <figure class="vis__a"><img src="assets/img/store-sm.jpg" srcset="assets/img/store-sm.jpg 1000w, assets/img/store.jpg 2400w" sizes="(max-width:900px) 92vw, 52vw" loading="lazy" alt="Shop interior">
+        <span class="phold" data-i18n="vis.phold">Placeholder &middot; your photo here</span>
+        <figcaption><b data-i18n="vis.shop">The shop</b><span data-i18n="vis.addr">Al Baraha, Deira, Dubai</span></figcaption></figure>
+      <div class="vis__b">
+        <figure><img src="assets/img/counter-sm.jpg" loading="lazy" alt="Devices on the counter">
+          <span class="phold" data-i18n="vis.pholdShort">Placeholder</span></figure>
+        <div class="vis__i">
+          <div><span class="mono" data-i18n="vis.hours">Opening hours</span><b data-i18n="vis.hoursV">Every day 10:00 to midnight</b><i data-i18n="vis.hoursF">Fridays from 16:00</i></div>
+          <div><span class="mono" data-i18n="vis.door">Doorstep visits</span><b data-i18n="vis.doorV">Book any slot</b><i data-i18n="vis.doorS">Non technical services across Dubai</i></div>
+          <div class="vis__cta"><a class="btn btn--p" href="https://wa.me/971506711885" target="_blank" rel="noopener" data-i18n="vis.wa">WhatsApp us</a>
+            <a class="btn btn--o" href="tel:+971506711885" data-i18n="vis.call">Call</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--pap"><div class="wrap">
+  <header class="sh"><div><h2 data-i18n="rev.h2">2,140 customers in Dubai</h2><p data-i18n="rev.sub">Rated 4.8 out of 5 for condition accuracy and delivery timing.</p></div></header>
+  <div class="rev" id="revs"></div>
+</div></section>
+
+<section class="cap"><div class="wrap cap__in">
+  <div><h2 data-i18n="cap.h2">Get first look at new stock</h2>
+    <p data-i18n="cap.p">We list graded phones the day they pass testing. Tell us what you are hunting for and we message you the moment it lands.</p></div>
+  <form class="cap__f" id="capForm" data-capture="Stock alert. Model wanted plus contact. Turns dead traffic into a waiting list you can sell against.">
+    <select id="capModel"><option value="" data-i18n="cap.q">What are you looking for?</option>
+      <option>iPhone 15 Pro Max</option><option>iPhone 15</option><option>iPhone 14 Pro</option><option>iPhone 13</option>
+      <option>Galaxy S23 Ultra</option><option>Galaxy S22</option><option data-i18n="rail.acc">Accessories</option><option data-i18n="cap.other">Something else</option></select>
+    <input type="tel" id="capPhone" placeholder="WhatsApp number" data-i18n-ph="f.wa" required>
+    <button class="btn btn--p" type="submit" data-i18n="cap.cta">Notify me</button>
+  </form>
+</div></section>
+
+</main>
+
+<footer class="ft"><div class="wrap">
+  <div class="ft__t">
+    <div class="ft__br">
+      <a class="wm wm--l" href="#top" aria-label="TDR Electronic">
+        <span class="wm__r" aria-hidden="true"><span>T</span><span class="wm__d">D</span><span>R</span></span>
+        <span class="wm__s" aria-hidden="true">ELECTRONIC</span></a>
+      <p data-i18n="ft.blurb">Certified preowned phones, new stock and accessories. Al Baraha, Deira, Dubai.</p>
+      <div class="ft__b"><a class="btn btn--p" href="https://wa.me/971506711885" target="_blank" rel="noopener" data-i18n="vis.wa">WhatsApp us</a>
+        <a class="btn btn--w" href="tel:+971506711885">+971 50 6711885</a></div>
+    </div>
+    <div><h4 data-i18n="ft.shop">Shop</h4><ul><li><a href="#shop" data-i18n="nav.iphone">iPhone</a></li><li><a href="#shop" data-i18n="nav.samsung">Samsung</a></li><li><a href="#shop" data-i18n="rail.acc">Accessories</a></li><li><a href="#grades" data-i18n="nav.grades">Condition guide</a></li></ul></div>
+    <div><h4 data-i18n="ft.services">Services</h4><ul><li><a href="#tradein" data-i18n="nav.tradein">Trade in</a></li><li><a href="#tradein" data-i18n="ft.sell">Sell your phone</a></li><li><a href="#finder" data-i18n="nav.finder">Phone finder</a></li><li><a href="#visit" data-i18n="ft.door">Doorstep visit</a></li></ul></div>
+    <div><h4 data-i18n="ft.help">Help</h4><ul><li><a href="#" data-i18n="ft.track">Track my order</a></li><li><a href="#" data-i18n="ft.warranty">Warranty claim</a></li><li><a href="#" data-i18n="ft.returns">Returns</a></li><li><a href="#visit" data-i18n="ft.contact">Contact</a></li></ul></div>
+  </div>
+  <div class="ft__pay"><span data-i18n="ft.pay">Pay securely with</span><div><img src="assets/img/logo/tabby.webp" alt="Tabby"><img src="assets/img/logo/applepay.webp" alt="Apple Pay"><img src="assets/img/logo/visa.webp" alt="Visa"><img src="assets/img/logo/mastercard.svg" alt="Mastercard"></div></div>
+    <div class="ft__base"><p>&copy; <span id="yr">2026</span> <span data-i18n="ft.rights">TDR Electronic. Draft concept for presentation.</span></p>
+    <p class="mono" data-i18n="ft.addr">Al Baraha, Deira, Dubai, UAE</p></div>
+</div></footer>
+
+<a class="wafab" href="https://wa.me/971506711885" target="_blank" rel="noopener" aria-label="WhatsApp us">
+  <svg viewBox="0 0 24 24" class="f"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2m0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20m4.5-6c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.6 6.6 0 0 1-3.3-2.9c-.2-.4 0-.5.1-.7l.4-.4.2-.4v-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.8 2 4.8 4.8 0 0 0 1 2.5 11 11 0 0 0 4.2 3.7c1.5.6 2.1.7 2.9.6a2.5 2.5 0 0 0 1.6-1.2 2 2 0 0 0 .2-1.1z"/></svg>
+</a>
+
+<button class="sbar" id="sbar" hidden>
+  <span class="sbar__ic"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 2H2"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/></svg><b id="sbarN">0</b></span>
+  <span class="sbar__l"><span data-i18n="cart.view">View cart</span><em id="sbarSave"></em></span>
+  <span class="sbar__p" id="sbarPrice"></span>
+  <svg class="sbar__a" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+</button>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="sheet" id="cartDrawer" hidden aria-label="Cart" data-i18n-al="nav.cart">
+  <div class="sheet__g"></div>
+  <header><b data-i18n="cart.title">Your cart</b><button data-close aria-label="Close" data-i18n-al="f.close">&times;</button></header>
+  <div class="ship" id="shipBar"><i></i><span id="shipTxt"></span></div>
+  <div class="sheet__b" id="cartBody"></div>
+  <footer class="sheet__f" id="cartFoot"></footer>
+</aside>
+
+<aside class="sheet sheet--w" id="pdpDrawer" hidden aria-label="Product">
+  <div class="sheet__g"></div>
+  <header><b id="pdpTitle" data-i18n="ui.product">Product</b><button data-close aria-label="Close" data-i18n-al="f.close">&times;</button></header>
+  <div class="sheet__b" id="pdpBody"></div>
+</aside>
+
+<div class="mdl" id="modal" hidden><div class="mdl__b" id="modalBox"></div></div>
+
+<!-- GIFT FLOW -->
+<div class="gf" id="giftFlow" hidden>
+  <div class="gf__box" id="giftBox"></div>
+</div>
+
+<div class="tst" id="toasts"></div>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

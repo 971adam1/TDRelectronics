@@ -1,0 +1,225 @@
+/* ============ v6 ============
+   Fixes the hero blowout, rebuilds the price block, adds the trade in starter.
+   Root cause of v5: flex and grid children default to min-width:auto, so a
+   522px product image refused to shrink and forced the hero column to 685px
+   inside a 390px screen. Everything below sets min-width:0 and sizes images
+   against a fixed box instead of relying on max-height percentages.        */
+
+/* every link in the chain must be allowed to shrink */
+.hero__in,.hero__c,.hero__m,.deal,.deal__vp,.deal__tr,.dsl,.dsl__b,.tin2{min-width:0}
+.deal__tr > .dsl{min-width:0;max-width:100%}
+
+/* ---------- hero shell ---------- */
+.hero__in{grid-template-columns:1fr;gap:18px;padding-block:18px 26px}
+.hero__c{text-align:left}
+.hero h1{font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.04;margin:0 0 8px;letter-spacing:-.04em}
+.hero__c>p{font-size:.92rem;max-width:34ch;color:rgba(255,255,255,.72)}
+.hero__t{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:14px;padding:0;border:0}
+.hero__t li{display:flex;align-items:center;gap:6px;font-size:.74rem;font-weight:600;
+  color:rgba(255,255,255,.78);min-width:0}
+.hero__t svg{width:14px;height:14px;color:#7FA5FF;flex:none}
+
+/* ---------- deal slide: image in a fixed box, never free sized ---------- */
+.deal__vp{border-radius:18px}
+.dsl{min-width:0}
+.dsl__hd{padding:11px 13px 0}
+.dsl__im{position:relative;height:150px;padding:4px 13px;display:block}
+.dsl__im img{position:absolute;inset:4px 13px;width:calc(100% - 26px);height:calc(100% - 8px);
+  max-width:none;max-height:none;object-fit:contain;mix-blend-mode:multiply}
+.dsl__b{padding:0 15px 15px;min-width:0}
+.dsl h3{font-size:1.15rem;line-height:1.2}
+.dsl__m{font-size:.75rem}
+.dsl__br{display:none}          /* brand mark moves out of the image area */
+
+/* ---------- the price block, rebuilt ----------
+   Instalment leads because 460 reads as affordable where 1,839 reads as a
+   decision. Saving sits beside it as the reason, full price underneath as
+   the honesty line. One block, three tiers, no competing boxes.           */
+.dsl__sv{display:none}          /* old separate savings panel is gone */
+
+.pblk{margin:12px 0 13px;border-radius:16px;overflow:hidden;
+  border:1px solid #BFE6D4;background:linear-gradient(180deg,#F2FBF7,#fff)}
+.pblk__top{display:flex;align-items:stretch;gap:0}
+.pblk__from{flex:1;min-width:0;padding:11px 13px}
+.pblk__k{display:block;font-size:.62rem;font-weight:800;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.pblk__v{display:flex;align-items:baseline;gap:4px;flex-wrap:nowrap;min-width:0}
+.pblk__v b{font-size:1.85rem;font-weight:800;letter-spacing:-.045em;line-height:1;white-space:nowrap}
+.pblk__v em{font-style:normal;font-size:.7rem;font-weight:700;color:var(--ink2);white-space:nowrap}
+.pblk__tby{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:.68rem;color:var(--ink2)}
+.pblk__tby img{height:15px;width:auto}
+.pblk__save{flex:none;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:11px 13px;background:var(--ok);color:#fff;text-align:center;min-width:104px}
+.pblk__save span{font-size:.58rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.9}
+.pblk__save b{font-size:1.15rem;font-weight:800;letter-spacing:-.035em;line-height:1.15;white-space:nowrap}
+.pblk__save i{font-style:normal;font-size:.6rem;opacity:.9}
+.pblk__full{padding:8px 13px;border-top:1px dashed #BFE6D4;font-size:.73rem;color:var(--ink2);
+  display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pblk__full b{color:var(--ink);font-weight:800}
+
+/* brand mark now sits on the header row, clear of the product */
+.dsl__hd .dsl__brand{height:12px;width:auto;opacity:.4;margin-left:auto}
+.dsl__hd .dsl__brand[alt=Samsung]{height:8px}
+
+/* ---------- trade in starter ---------- */
+.tin2{margin-top:12px;background:#fff;border-radius:18px;padding:14px;color:var(--ink);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.55)}
+.tin2__hd{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.tin2__ic{flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
+  background:var(--gold-t);border:1px solid #EBD9A6}
+.tin2__ic svg{width:28px;height:28px;fill:none;stroke:var(--gold);stroke-width:2.6;
+  stroke-linecap:round;stroke-linejoin:round}
+.tin2__hd b{display:block;font-size:1rem;font-weight:800;letter-spacing:-.025em;line-height:1.2}
+.tin2__hd i{font-style:normal;font-size:.76rem;color:var(--ink2)}
+
+.tin2__ph{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;
+  background:var(--surf);border-radius:13px;padding:10px;margin-bottom:12px}
+.tin2__ph-i{min-width:0;text-align:center}
+.tin2__ph-i img{width:100%;height:68px;object-fit:contain;mix-blend-mode:multiply}
+.tin2__ph-i span{display:block;margin-top:3px;font-size:.62rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink3)}
+.tin2__ph-x{flex:none;width:30px;height:30px;border-radius:99px;background:#8A6A08;color:#fff;
+  display:grid;place-items:center}
+.tin2__ph-x svg{width:17px;height:17px;stroke-width:2.2}
+
+.tin2__q label{display:block;font-size:.88rem;font-weight:800;margin-bottom:9px}
+.tin2__opts{display:flex;flex-wrap:wrap;gap:7px}
+.tin2__opts button{flex:1 1 auto;min-width:0;padding:11px 12px;border:1.5px solid var(--line2);
+  border-radius:11px;background:#fff;font-size:.83rem;font-weight:700;transition:.18s var(--e);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tin2__opts button:hover{border-color:var(--gold);background:var(--gold-t)}
+.tin2__opts button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tin2__opts .wide{flex-basis:100%}
+.tin2__step{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.72rem;color:var(--ink3)}
+.tin2__step b{color:var(--gold);font-weight:800}
+.tin2__res{text-align:center;padding:6px 0 2px}
+.tin2__res span{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.tin2__res b{display:block;font-size:2rem;font-weight:800;letter-spacing:-.045em;color:var(--ok);line-height:1.15}
+.tin2__res i{font-style:normal;font-size:.73rem;color:var(--ink2)}
+
+/* ---------- gift tile: heartbeat + golden aura ---------- */
+.gtile{position:relative;overflow:visible;border:0;background:transparent}
+.gtile__in{position:relative;z-index:2;border-radius:var(--rl);
+  background:linear-gradient(160deg,#182A48,#0A1120);
+  border:1.5px solid rgba(240,194,75,.55);height:100%}
+/* the aura is a sibling layer so it can scale past the card without clipping */
+.gtile::before,.gtile::after{content:"";position:absolute;inset:0;border-radius:var(--rl);
+  border:2px solid rgba(240,194,75,.75);pointer-events:none;z-index:1}
+.gtile::before{animation:aura 2.4s ease-out infinite}
+.gtile::after{animation:aura 2.4s ease-out .6s infinite}
+@keyframes aura{
+  0%{transform:scale(1);opacity:.85}
+  70%{transform:scale(1.045);opacity:0}
+  100%{transform:scale(1.045);opacity:0}
+}
+.gtile__in{animation:beat 2.4s ease-in-out infinite}
+@keyframes beat{
+  0%,72%,100%{transform:scale(1)}
+  8%{transform:scale(1.022)}
+  16%{transform:scale(1)}
+  24%{transform:scale(1.014)}
+  32%{transform:scale(1)}
+}
+.gtile__i{box-shadow:0 8px 22px -8px rgba(240,194,75,.9)}
+.gtile--done{overflow:hidden}
+.gtile--done::before,.gtile--done::after{display:none}
+.gtile--done .gtile__in{animation:none;border-color:rgba(18,161,110,.5)}
+
+/* ---------- product card: brand mark off the image ---------- */
+.cd__bl{position:static;display:block;height:11px;width:auto;opacity:.42;margin:0 0 5px}
+.cd__bl[alt=Samsung]{height:8px}
+.cd__b{padding-top:12px}
+
+/* ---------- desktop ---------- */
+@media(min-width:981px){
+  .hero__in{grid-template-columns:1fr 1.05fr;gap:clamp(28px,4vw,56px);align-items:center;
+    padding-block:clamp(30px,4vw,60px)}
+  .hero h1{font-size:clamp(2.2rem,3.6vw,3.3rem)}
+  .hero__c>p{font-size:1rem}
+  .hero__m{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;align-items:start}
+  .tin2{margin-top:0}
+  .dsl__im{height:180px}
+  .tin2__ph-i img{height:78px}
+}
+@media(min-width:1200px){
+  .dsl__im{height:200px}
+  .pblk__v b{font-size:2rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .gtile::before,.gtile::after,.gtile__in{animation:none}
+  .gtile::before,.gtile::after{opacity:.6;transform:none}
+}
+
+/* ---------- floating buttons must never cover a call to action ----------
+   Both FABs stay out of the way while the hero is on screen, then fade in
+   once the visitor has scrolled past it. */
+.wafab,.ifab{opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .28s var(--e),transform .28s var(--e),visibility .28s}
+body.scrolled .wafab,body.scrolled .ifab{opacity:1;visibility:visible;transform:none}
+.ifab{height:38px;padding:0 14px;font-size:.78rem}
+.ifab svg{width:15px;height:15px}
+
+/* bigger, clearer trade in mark */
+.tin2__ic{width:50px;height:50px;border-radius:15px}
+.tin2__ic svg{width:34px;height:34px;stroke-width:2.2}
+
+/* brand mark sits with the product name, never over the product */
+.cd__hd{display:flex;align-items:center;gap:7px;min-width:0}
+.cd__hd .cd__bl{position:static;flex:none;height:12px;width:auto;opacity:.4;margin:0}
+.cd__hd .cd__bl[alt=Samsung]{height:8px}
+.cd__hd .cd__n{margin:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* social proof always, primary CTA where there is room for it */
+.hero__cta{display:none;margin-top:20px}
+.hero__pf{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:14px;
+  font-size:.78rem;color:rgba(255,255,255,.66)}
+.hero__pf b{color:#fff;font-weight:800}
+.hero__st{color:#F0C24B;letter-spacing:1px;font-size:.82rem}
+@media(min-width:981px){
+  .hero__cta{display:block}
+  .hero__pf{margin-top:18px;font-size:.84rem}
+}
+
+/* ---------- real trade in assets ---------- */
+/* icon is a black-on-white source converted to an alpha mask, so it still
+   takes the gold from currentColor and works on any surface */
+.tin2__glyph{width:100%;height:100%;background:#8A6A08;
+  -webkit-mask:url(../img/tradein-icon.png) center/contain no-repeat;
+  mask:url(../img/tradein-icon.png) center/contain no-repeat}
+.tin2__ic{padding:9px}
+
+/* the exchange photo. Cropped by the frame so the hands fill it rather than
+   floating in the studio white the source ships with. */
+.tin2__ph{display:block;position:relative;padding:0;background:#fff;
+  border:1px solid var(--line);overflow:hidden}
+.tin2__ph img{width:100%;aspect-ratio:3.25/1;object-fit:cover;object-position:center 46%;
+  mix-blend-mode:multiply}
+.tin2__ph figcaption{display:flex;justify-content:space-between;gap:10px;
+  padding:0 12px 9px;margin-top:-2px}
+.tin2__ph figcaption span{font-size:.62rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink3)}
+@media(min-width:981px){
+  .tin2__ph img{aspect-ratio:2.9/1}
+}
+
+/* Insight is a demo control, not part of the shop. Collapse it to a disc on
+   small screens so it stops sitting on top of real headings. */
+@media(max-width:980px){
+  .ifab{width:38px;height:38px;padding:0;border-radius:99px;justify-content:center;opacity:.92}
+  .ifab span{display:none}
+  .ifab svg{width:16px;height:16px}
+}
+
+/* ============ placeholder marker ============
+   The three interior photographs are stock images of another company's premises.
+   They are labelled rather than silently presented, so the client reads them as
+   "your photo goes here" instead of "they got my shop wrong". Remove this rule
+   and the markers once his own photography is in. */
+.vis__b figure{position:relative}
+.vis__a .phold,.vis__b .phold{position:absolute;top:12px;left:12px;z-index:2;
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:99px;
+  background:rgba(12,21,36,.78);backdrop-filter:blur(6px);
+  color:#fff;opacity:1;
+  font-family:var(--m);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:600}
+.vis__a .phold::before,.vis__b .phold::before{content:"";width:5px;height:5px;border-radius:99px;background:#E0B341}

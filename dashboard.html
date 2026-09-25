@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TDR Electronic | Website Dashboard</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C1524">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/dash.css">
+</head>
+<body>
+
+<button class="mnav" id="mnav" aria-label="Menu"><span></span><span></span><span></span></button>
+
+<aside class="sb" id="sb">
+  <div class="sb__top">
+    <a class="wm" href="#">
+      <span class="wm__r" aria-hidden="true"><span>T</span><span class="wm__d">D</span><span>R</span></span>
+      <span class="wm__s" aria-hidden="true">ELECTRONIC</span>
+    </a>
+    <p class="sb__lbl">Website dashboard</p>
+  </div>
+  <nav class="sb__nav" id="nav">
+    <button class="on" data-p="overview">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+      Overview</button>
+    <button data-p="leads">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/></svg>
+      Leads <b class="pill" id="navLeads">186</b></button>
+    <button data-p="demand">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      What people want</button>
+    <button data-p="tradein">
+      <svg viewBox="0 0 24 24"><path d="M4 8h16l-4-4M20 16H4l4 4"/></svg>
+      Trade ins <b class="pill pill--w" id="navTin">3</b></button>
+  </nav>
+  <div class="sb__foot">
+    <div class="sb__note">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <p>This dashboard covers <b>website activity only</b>. Walk in and phone sales are not included.</p>
+    </div>
+  </div>
+</aside>
+
+<main class="mn">
+  <header class="tb">
+    <div>
+      <h1 id="pgTitle">Overview</h1>
+      <p id="pgSub">What the website did for you in the last 30 days</p>
+    </div>
+    <div class="tb__r">
+      <div class="seg" id="range" role="group" aria-label="Date range">
+        <button data-r="7">7 days</button><button class="on" data-r="30">30 days</button><button data-r="90">90 days</button>
+      </div>
+      <a class="btn btn--o" href="index.html">View the site</a>
+    </div>
+  </header>
+
+  <div class="pg on" id="p-overview"></div>
+  <div class="pg" id="p-leads"></div>
+  <div class="pg" id="p-demand"></div>
+  <div class="pg" id="p-tradein"></div>
+</main>
+
+<div class="tip" id="tip" hidden></div>
+<script src="assets/js/dash.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+/* ============================================================================
+   Language: fonts, direction, and the switcher.
+
+   Loaded last so it can override the Latin type stack per language without
+   touching the base sheets.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------- fonts */
+/* Self hosted so the demo works with no internet and never flashes unstyled
+   Arabic. Each language only pulls its own files. */
+
+@font-face{font-family:'PlexArabic';src:url('../fonts/ar-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'PlexArabic';src:url('../fonts/ar-600.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'PlexArabic';src:url('../fonts/ar-700.woff2') format('woff2');
+  font-weight:700 900;font-style:normal;font-display:swap}
+
+@font-face{font-family:'NotoDeva';src:url('../fonts/hi-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'NotoDeva';src:url('../fonts/hi-600.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'NotoDeva';src:url('../fonts/hi-700.woff2') format('woff2');
+  font-weight:700 900;font-style:normal;font-display:swap}
+
+@font-face{font-family:'NastaliqUrdu';src:url('../fonts/ur-400.woff2') format('woff2');
+  font-weight:400 600;font-style:normal;font-display:swap}
+@font-face{font-family:'NastaliqUrdu';src:url('../fonts/ur-700.woff2') format('woff2');
+  font-weight:700 900;font-style:normal;font-display:swap}
+
+/* The Latin family stays first in every stack so digits, model names and the
+   wordmark keep rendering in the brand face. The script font only picks up the
+   characters the Latin face has no glyph for, which is exactly what we want. */
+:root[data-lang="ar"] body,:root[data-lang="ar"] input,
+:root[data-lang="ar"] button,:root[data-lang="ar"] select,:root[data-lang="ar"] textarea{
+  font-family:var(--f),'PlexArabic',system-ui,sans-serif}
+:root[data-lang="hi"] body,:root[data-lang="hi"] input,
+:root[data-lang="hi"] button,:root[data-lang="hi"] select,:root[data-lang="hi"] textarea{
+  font-family:var(--f),'NotoDeva',system-ui,sans-serif}
+:root[data-lang="ur"] body,:root[data-lang="ur"] input,
+:root[data-lang="ur"] button,:root[data-lang="ur"] select,:root[data-lang="ur"] textarea{
+  font-family:var(--f),'PlexArabic',system-ui,sans-serif}
+
+/* display face */
+:root[data-lang="ur"] h1,:root[data-lang="ur"] h2,
+:root[data-lang="ur"] .dsl__n,:root[data-lang="ur"] .gtile__in h3,
+:root[data-lang="ur"] .tin2__hd b,:root[data-lang="ur"] .sh h2{
+  font-family:var(--f),'NastaliqUrdu',serif;line-height:1.85;padding-block:.1em}
+
+/* Nastaliq hangs well below the baseline and stacks its words on a slope, so it
+   needs room that a Latin sans does not. Without this every button clips. */
+:root[data-lang="ur"] body{line-height:1.75}
+:root[data-lang="ur"] .btn{min-height:50px;line-height:1.6}
+:root[data-lang="ur"] .eyb{line-height:1.9}
+
+/* Devanagari sits taller than Latin and its matras need a little headroom. */
+:root[data-lang="hi"] body{line-height:1.7}
+:root[data-lang="hi"] h1,:root[data-lang="hi"] h2{line-height:1.3}
+
+/* --------------------------------------------------------------------- RTL */
+/* The base sheets use physical properties in a few places. Rather than rewrite
+   every one, mirror the handful that actually carry layout meaning. */
+
+[dir="rtl"] .hero__c,[dir="rtl"] .tin__c,[dir="rtl"] .sh,
+[dir="rtl"] .cd__b,[dir="rtl"] .pblk,[dir="rtl"] .tin2{text-align:right}
+
+[dir="rtl"] .wm,[dir="rtl"] .wm__r,[dir="rtl"] .wm__s{direction:ltr}
+[dir="rtl"] .mono,[dir="rtl"] .num,[dir="rtl"] .dh{direction:ltr;unicode-bidi:isolate}
+
+/* Prices, model names and anything else Latin inside an RTL sentence gets its
+   own isolate so the digits do not reorder around the surrounding Arabic. */
+[dir="rtl"] .pblk__v,[dir="rtl"] .pblk__full b,[dir="rtl"] .cd__p,
+[dir="rtl"] .cd__sv,[dir="rtl"] .ochip b,[dir="rtl"] .dsl__p{
+  direction:ltr;unicode-bidi:isolate;text-align:right}
+[dir="rtl"] .cd__p,[dir="rtl"] .pblk__v{justify-content:flex-end}
+
+/* Arrows and progress bars that encode direction have to flip. */
+[dir="rtl"] .deal__nv svg,[dir="rtl"] .bk svg,[dir="rtl"] .sbar svg,
+[dir="rtl"] .rc svg,[dir="rtl"] .ochip svg{transform:scaleX(-1)}
+[dir="rtl"] .tin2__swap{transform:scaleX(-1)}
+
+/* The deal carousel translates by percentage, so in RTL it has to go the other
+   way. Handled in JS, but the track itself needs the row reversed. */
+[dir="rtl"] .deal__tr{flex-direction:row-reverse}
+
+[dir="rtl"] .sheet{left:0;right:auto}
+[dir="rtl"] .lang__m{left:0;right:auto}
+[dir="rtl"] .phold{left:auto;right:12px}
+[dir="rtl"] .hw li b{margin-inline:0 12px}
+
+/* ---------------------------------------------------------------- switcher */
+.lang{position:relative;display:flex;align-items:center}
+.lang__b{display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 10px;
+  border:1.5px solid var(--line2);border-radius:99px;background:transparent;
+  color:var(--ink);font-weight:700;font-size:.78rem;cursor:pointer;transition:.2s var(--e)}
+.lang__b:hover{border-color:var(--blue);color:var(--blue)}
+.lang__b svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7}
+.lang__b b{font-size:.74rem;letter-spacing:.02em;min-width:18px}
+
+.lang__m{position:absolute;top:calc(100% + 8px);right:0;z-index:70;
+  background:#fff;border:1px solid var(--line2);border-radius:14px;
+  box-shadow:var(--shl);padding:6px;min-width:158px}
+
+.lang__m button:hover{background:var(--paper)}
+.lang__m button.on{background:var(--blue-t);color:var(--blue)}
+
+.lang__m button.on span{color:var(--blue)}
+/* each option renders in its own script */
+
+
+
+
+@media (max-width:560px){
+  .lang__b{height:34px;padding:0 8px}
+  .lang__b b{display:none}
+  .lang__m{min-width:150px}
+}
+
+/* ------------------------------------------------- brand picker (trade in) */
+.tin2__opts--brand{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tin2__opts--brand .bt{display:grid;place-items:center;height:62px;padding:0 6px;
+  border:1.5px solid var(--line2);border-radius:14px;background:#fff;cursor:pointer;
+  transition:.2s var(--e)}
+.tin2__opts--brand .bt:hover{border-color:var(--blue);background:var(--blue-t);transform:translateY(-1px)}
+.tin2__opts--brand .bt.wide{grid-column:1 / -1;height:52px}
+/* every mark is an alpha mask, so one colour rule covers all four */
+.bt[data-b="apple"]   .bt__m{-webkit-mask-image:url(../img/brand/apple.png);   mask-image:url(../img/brand/apple.png)}
+.bt[data-b="samsung"] .bt__m{-webkit-mask-image:url(../img/brand/samsung.png); mask-image:url(../img/brand/samsung.png)}
+.bt[data-b="xiaomi"]  .bt__m{-webkit-mask-image:url(../img/brand/xiaomi.png);  mask-image:url(../img/brand/xiaomi.png)}
+.bt[data-b="huawei"]  .bt__m{-webkit-mask-image:url(../img/brand/huawei.png);  mask-image:url(../img/brand/huawei.png)}
+.bt__m{width:100%;height:30px;background:var(--ink);
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:center;mask-position:center;
+  -webkit-mask-size:contain;mask-size:contain;transition:background .2s var(--e)}
+.tin2__opts--brand .bt:hover .bt__m{background:var(--blue)}
+.bt__t{font-weight:700;font-size:.92rem;color:var(--ink)}
+.tin2__opts--brand .bt:hover .bt__t{color:var(--blue)}
+
+/* --------------------------------------------- what happens next (no price) */
+.tin2__next{border:1.5px dashed var(--line2);border-radius:16px;padding:14px 16px;background:var(--paper)}
+.tin2__nk{display:block;font-family:var(--m);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+.tin2__steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.tin2__steps li{counter-increment:s;position:relative;padding-inline-start:26px;
+  margin-bottom:8px;font-size:.86rem;line-height:1.45;color:var(--ink2)}
+.tin2__steps li::before{content:counter(s);position:absolute;inset-inline-start:0;top:1px;
+  width:18px;height:18px;border-radius:99px;background:var(--blue);color:#fff;
+  font-size:10px;font-weight:800;display:grid;place-items:center}
+.tin2__sum{margin:10px 0 0;padding-top:9px;border-top:1px solid var(--line2);
+  font-size:.8rem;font-weight:700;color:var(--ink)}
+
+/* ---------------------------------------------------- how it works (panel) */
+.tin__b--how{display:flex;flex-direction:column;gap:14px}
+.tin__b--how>.mono{color:var(--ink3)}
+.hw{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.hw li{display:flex;gap:12px;align-items:flex-start}
+.hw li b{flex:0 0 26px;width:26px;height:26px;border-radius:99px;
+  background:var(--blue);color:#fff;font-size:.78rem;font-weight:800;
+  display:grid;place-items:center;margin-top:1px}
+.hw li strong{display:block;font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.35}
+.hw li span{display:block;font-size:.82rem;color:var(--ink2);margin-top:2px;line-height:1.4}
+
+@media (max-width:640px){
+  .tin2__opts--brand{grid-template-columns:repeat(2,1fr)}
+  .tin2__opts--brand .bt{height:58px}
+}
+
+
+/* ============ trade in, v9 ============ */
+
+/* The card was noticeably smaller than the deal beside it. Closer to equal, and
+   with room to breathe now that there is a third step in the flow. */
+@media(min-width:981px){
+  .hero__m{grid-template-columns:1fr .98fr}
+  .tin2{padding:18px}
+}
+
+/* back control. Every survey step past the first gets one, because a misclick
+   on a brand logo should cost a tap, not the whole flow. */
+.sback{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;
+  padding:6px 12px 6px 8px;border:1.5px solid var(--line2);border-radius:99px;
+  background:transparent;color:var(--ink2);font-size:.78rem;font-weight:700;
+  cursor:pointer;transition:.2s var(--e)}
+.sback:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-t)}
+.sback svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round}
+[dir="rtl"] .sback{padding:6px 8px 6px 12px}
+[dir="rtl"] .sback svg{transform:scaleX(-1)}
+
+/* model step: two columns of short labels, so a six option list still reads as
+   one glance rather than a menu */
+.tin2__opts--model{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tin2__opts--model button{min-height:46px;padding:8px 10px;font-size:.86rem;
+  font-weight:700;line-height:1.25;border:1.5px solid var(--line2);border-radius:12px;
+  background:#fff;color:var(--ink);cursor:pointer;transition:.2s var(--e)}
+.tin2__opts--model button:hover{border-color:var(--blue);background:var(--blue-t);color:var(--blue)}
+.tin2__opts--model button.wide{grid-column:1 / -1}
+
+/* the chosen brand stays visible above the model list, so the flow never loses
+   its place */
+.tin2__chosen{display:inline-flex;align-items:center;gap:8px;margin-bottom:9px;
+  padding:5px 11px;border-radius:99px;background:var(--blue-t);color:var(--blue);
+  font-size:.76rem;font-weight:800;letter-spacing:.01em}
+.tin2__chosen i{width:34px;height:14px;background:currentColor;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:center;mask-position:center;
+  -webkit-mask-size:contain;mask-size:contain}
+.tin2__chosen[data-b="apple"] i{-webkit-mask-image:url(../img/brand/apple.png);mask-image:url(../img/brand/apple.png)}
+.tin2__chosen[data-b="samsung"] i{-webkit-mask-image:url(../img/brand/samsung.png);mask-image:url(../img/brand/samsung.png)}
+.tin2__chosen[data-b="xiaomi"] i{-webkit-mask-image:url(../img/brand/xiaomi.png);mask-image:url(../img/brand/xiaomi.png)}
+.tin2__chosen[data-b="huawei"] i{-webkit-mask-image:url(../img/brand/huawei.png);mask-image:url(../img/brand/huawei.png)}
+.tin2__chosen[data-b="other"] i{display:none}
+
+/* ============ language switcher: flags ============ */
+.lang__b .fl{width:22px;height:15px;border-radius:3px;object-fit:cover;
+  box-shadow:0 0 0 1px rgba(0,0,0,.08);display:block}
+.lang__b svg{display:none}
+
+
+
+
+
+.sback--g{position:absolute;top:14px;inset-inline-start:14px;z-index:3;
+  border-color:rgba(255,255,255,.34);color:rgba(255,255,255,.9);background:rgba(255,255,255,.08)}
+.sback--g:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.18)}
+
+/* the picker rows always read flag, name, code. Mirroring them with the page
+   makes the menu look broken rather than localised. */
+
+
+
+
+/* desktop: taller brand tiles so the card sits closer to the deal beside it */
+@media(min-width:981px){
+  .tin2__opts--brand .bt{height:76px}
+  .tin2__opts--brand .bt.wide{height:60px}
+  .bt__m{height:34px}
+  .tin2__opts--model button{min-height:52px}
+}
+
+/* head row sits above the options, never inside the grid */
+.tin2__head:empty{display:none}
+.tin2__head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.tin2__head .sback{margin-bottom:0}
+.tin2__head .tin2__chosen{margin-bottom:0}
+
+
+/* ============ language picker, consolidated ============
+   Three fixed columns: flag, name, code. Every row is the same height and every
+   name starts at the same x, whatever script it is in.
+
+   The name is bidi isolated so Arabic and Urdu render in the right glyph order,
+   but it is left aligned like the others so the column reads straight. The menu
+   itself never mirrors with the page: a picker that flips its own layout looks
+   broken rather than localised.
+
+   The names are set in Naskh, not Nastaliq, for the same reason the rest of the
+   small text is: this is a 14px UI label, not display type. It also keeps all
+   four rows at one height. */
+.lang__m{direction:ltr;padding:6px;min-width:184px}
+.lang__m button{
+  display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:12px;
+  width:100%;min-height:42px;padding:8px 11px;
+  border:0;border-radius:10px;background:transparent;cursor:pointer;
+  direction:ltr;text-align:left}
+.lang__m button:hover{background:var(--paper)}
+.lang__m button.on{background:var(--blue-t)}
+
+.lang__m .fl{width:26px;height:18px;border-radius:3px;object-fit:cover;
+  box-shadow:0 0 0 1px rgba(0,0,0,.09);display:block}
+
+.lang__m button b{
+  font-family:var(--f),'PlexArabic','NotoDeva',system-ui,sans-serif;
+  font-size:.92rem;font-weight:600;line-height:1.3;
+  color:var(--ink);text-align:left;unicode-bidi:isolate;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lang__m button.on b{color:var(--blue)}
+
+.lang__m button span{
+  font-family:var(--m);font-size:.64rem;font-weight:700;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink3);justify-self:end}
+.lang__m button.on span{color:var(--blue)}
+
+@media (max-width:560px){ .lang__m{min-width:180px} }

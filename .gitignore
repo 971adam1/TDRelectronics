@@ -1,0 +1,15 @@
+# Screenshots kept locally for reference only.
+# firstimage.png shows the real client's wordmark, so this folder must never ship.
+_reference/
+
+# OS and editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# Node, if a build step is ever added
+node_modules/
+npm-debug.log*

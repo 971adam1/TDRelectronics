@@ -1,0 +1,4 @@
+# This build carries the client's real branding. It is a private preview,
+# not a public site. Keep it out of every index.
+User-agent: *
+Disallow: /
