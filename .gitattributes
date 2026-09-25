@@ -1,0 +1,11 @@
+# Store text with LF in the repo whatever the checkout platform does locally.
+# Without this, committing from Windows prints a CRLF warning for every file.
+* text=auto eol=lf
+
+# Leave binaries alone. Line ending normalisation corrupts them.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.woff2 binary
+*.ico   binary
