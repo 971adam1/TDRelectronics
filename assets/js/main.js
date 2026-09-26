@@ -81,19 +81,25 @@ var P = [
     colors:[['Phantom Black','#2E2E30','phantomblack'],['Phantom Silver','#D8D9DB','phantomsilver']] }
 ];
 
-var CONDS = [
-  { k:'C', n:'Good', d:'Visible scratches, works perfectly', m:1 },
-  { k:'B', n:'Very good', d:'Light marks, hard to spot', m:1.048 },
-  { k:'A', n:'Excellent', d:'Like new, no visible wear', m:1.075 }
-];
+function conds() {
+  return [
+    { k:'C', n:t('gr.c'), d:t('gr.cTxt2'), m:1 },
+    { k:'B', n:t('gr.b'), d:t('gr.bTxt2'), m:1.048 },
+    { k:'A', n:t('gr.a'), d:t('gr.aTxt2'), m:1.075 }
+  ];
+}
+var CONDS = conds();
 
-var BUNDLES = [
-  { id:'case',  name:'Protective case',       solo:79,  bundle:39,  img:'acc/case.webp' },
-  { id:'glass', name:'Tempered screen guard', solo:59,  bundle:25,  img:'acc/glass.webp' },
-  { id:'chg',   name:'20W fast charger',      solo:119, bundle:69,  img:'acc/charger.webp' },
-  { id:'buds',  name:'Wireless earbuds',      solo:249, bundle:169, img:'acc/buds.jpg' },
-  { id:'bank',  name:'10000mAh power bank',   solo:159, bundle:99,  img:'acc/bank.jpg' }
+function bundles() {
+  return [
+  { id:'case',  name:t('acc.case'),  solo:79,  bundle:39,  img:'acc/case.webp' },
+  { id:'glass', name:t('acc.glass'), solo:59,  bundle:25,  img:'acc/glass.webp' },
+  { id:'chg',   name:t('acc.chg'),   solo:119, bundle:69,  img:'acc/charger.webp' },
+  { id:'buds',  name:t('acc.buds'),  solo:249, bundle:169, img:'acc/buds.jpg' },
+  { id:'bank',  name:t('acc.bank'),  solo:159, bundle:99,  img:'acc/bank.jpg' }
 ];
+}
+var BUNDLES = bundles();
 
 var BRAND = { Apple:'assets/img/logo/apple.svg', Samsung:'assets/img/logo/samsung.png' };
 var TABBY = 'assets/img/logo/tabby.webp';
@@ -207,6 +213,9 @@ function toast(msg) {
 var GIFT = { shown:false, done:false, score:0, lead:null, unlocked:false };
 function intent(n) {
   if (GIFT.shown || GIFT.done) return;
+  /* Never cut across the trade in. The score keeps accruing, so the prompt still
+     fires the moment they finish or back out. */
+  if (TIN_ACTIVE) { GIFT.score += n; return; }
   GIFT.score += n;
   if (GIFT.score >= 3) setTimeout(openGift, 700);
 }
@@ -267,6 +276,7 @@ function step2() {
     if (btn.disabled) return;
     GIFT.lead = { phone: wa.value.trim(), name: nm.value.trim() };
     GIFT.unlocked = true;
+    showGiftFab();
     log('New customer lead: <b>' + GIFT.lead.name + '</b> opted in on WhatsApp', { lead:true });
     step3();
   });
@@ -276,11 +286,12 @@ function step3() {
   gbox.innerHTML =
     '<div class="g3"><div class="conf" id="conf"></div>' +
     '<div class="g3__top"><div class="g3__i"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg></div>' +
-    '<h3>Unlocked, ' + GIFT.lead.name + '</h3><p>' + t('gift.ready') + '</p></div>' +
+    '<h3>' + t('gift.unlocked').replace('{n}', GIFT.lead.name) + '</h3><p>' + t('gift.ready') + '</p></div>' +
     '<div class="g3__body"><div class="code"><span class="code__v">' + pr.code + '</span>' +
     '<button class="code__c" data-g="copy">' + t('gift.copy') + '</button></div>' +
-    '<p class="g3__t"><b>' + plain(pr.off) + ' off</b> your first order over ' + plain(pr.minSpend) +
-    '. Already saved to your checkout, just tap it in the cart.</p>' +
+    '<p class="g3__t">' + t('gift.terms')
+      .replace('{n}', '<b>' + plain(pr.off) + '</b>')
+      .replace('{m}', plain(pr.minSpend)) + '</p>' +
     '<button class="btn btn--p btn--full" data-g="shop">' + t('gift.shop') + '</button></div></div>';
   confetti(); renderCart(); renderGrid();
 }
@@ -318,14 +329,23 @@ gbox.addEventListener('click', function (e) {
     b.textContent = t('gift.copied'); return;
   }
   if (a === 'shop') {
+    var wasInTin = TIN_ACTIVE;
     closeGift(true);
     toast('<b>' + RULES.promo.code + '</b> saved to your checkout');
-    var s = $('#shop'); if (s) s.scrollIntoView({ behavior:'smooth' });
+    /* Only carry them to the grid if they were not already partway through
+       something. Scrolling someone out of a flow they chose is worse than
+       leaving them where they were. */
+    if (!wasInTin) { var s = $('#shop'); if (s) s.scrollIntoView({ behavior:'smooth' }); }
   }
 });
 
 /* ---------- state ---------- */
 var cart = [], addons = [], wish = [], shown = 8, filter = 'all', promoOn = false;
+
+/* True from the moment a brand is tapped until the request is sent. The gift
+   prompt checks this: interrupting someone who is already converting, to ask for
+   the same contact details, costs more than it earns. */
+var TIN_ACTIVE = false;
 function byId(id){ return P.filter(function(p){ return p.id === id; })[0]; }
 
 /* ---------- grid ---------- */
@@ -485,20 +505,20 @@ function renderCart() {
   }
   var rows = cart.map(function(i,ix){
     return '<div class="crow"><div class="crow__i"><img src="' + i.img + '" alt="" loading="lazy"></div>' +
-      '<div><b>' + i.name + '</b><i>' + i.color + ' · ' + i.stor + ' · Grade ' + i.cond + '</i>' +
-      '<button class="rm" data-rm="p" data-ix="' + ix + '">Remove</button></div>' +
+      '<div><b>' + i.name + '</b><i>' + i.color + ' · ' + i.stor + ' · ' + t('pdp.grade') + ' ' + i.cond + '</i>' +
+      '<button class="rm" data-rm="p" data-ix="' + ix + '">' + t('cart.remove') + '</button></div>' +
       '<div class="rt"><span>' + money(i.price) + '</span><s>' + money(i.was) + '</s></div></div>';
   }).join('');
   rows += addons.map(function(a,ix){
     return '<div class="crow"><div class="crow__i"><img src="assets/img/' + a.img + '" alt="" loading="lazy"></div>' +
       '<div><b>' + a.name + '</b><i>' + t('cart.bundle') + '</i>' +
-      '<button class="rm" data-rm="a" data-ix="' + ix + '">Remove</button></div>' +
+      '<button class="rm" data-rm="a" data-ix="' + ix + '">' + t('cart.remove') + '</button></div>' +
       '<div class="rt"><span>' + money(a.bundle) + '</span><s>' + money(a.solo) + '</s></div></div>';
   }).join('');
 
   var banner = tt.saved >= RULES.savingsBannerMin
     ? '<div class="svb"><div class="svb__i"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg></div>' +
-      '<div><b>You are saving ' + plain(tt.saved) + '</b><i>' + t('cart.vsNew') + '</i></div></div>' : '';
+      '<div><b>' + t('cart.saving2').replace('{n}', plain(tt.saved)) + '</b><i>' + t('cart.vsNew') + '</i></div></div>' : '';
 
   var avail = BUNDLES.filter(function(b){ return !addons.some(function(a){ return a.id === b.id; }); }).slice(0,3);
   var bundle = (cart.length && avail.length)
@@ -506,7 +526,7 @@ function renderCart() {
       avail.map(function(b){
         return '<div class="bi" data-b="' + b.id + '"><div class="bi__i"><img src="assets/img/' + b.img + '" alt="" loading="lazy"></div>' +
           '<div><b>' + b.name + '</b><div class="pr"><strong>' + money(b.bundle) + '</strong><s>' + money(b.solo) + '</s></div></div>' +
-          '<button class="bi__a">Add</button></div>';
+          '<button class="bi__a">' + t('cart.add') + '</button></div>';
       }).join('') + '</div>' : '';
 
   $('#cartBody').innerHTML = banner + rows + bundle;
@@ -534,7 +554,7 @@ function ship(tot) {
   var need = RULES.freeDeliveryOver - tot, bar = $('#shipBar');
   if (!tot) { bar.style.setProperty('--p','0%'); $('#shipTxt').innerHTML = 'Free delivery on orders over ' + plain(RULES.freeDeliveryOver); bar.classList.remove('done'); }
   else if (need > 0) { bar.style.setProperty('--p', (tot/RULES.freeDeliveryOver*100) + '%'); $('#shipTxt').innerHTML = 'Add ' + plain(need) + ' more for free delivery'; bar.classList.remove('done'); }
-  else { bar.style.setProperty('--p','100%'); $('#shipTxt').textContent = 'You qualify for free delivery'; bar.classList.add('done'); }
+  else { bar.style.setProperty('--p','100%'); $('#shipTxt').textContent = t('cart.qualify'); bar.classList.add('done'); }
 }
 $('#cartBody').addEventListener('click', function(e){
   var rm = e.target.closest('[data-rm]');
@@ -559,7 +579,7 @@ $('#cartFoot').addEventListener('click', function(e){
   }
   if (e.target.closest('#checkoutBtn')) {
     closeAll();
-    modal('<h3>' + t('cart.reserve') + '</h3><p>Confirm your details and we deliver today. Pay on delivery or online, your choice.</p>' +
+    modal('<h3>' + t('cart.reserve') + '</h3><p>' + t('m.reserve') + '</p>' +
       '<form data-lead="Checkout"><input placeholder="Full name" value="' + (GIFT.lead ? GIFT.lead.name : '') + '" required>' +
       '<input type="tel" placeholder="Mobile number" value="' + (GIFT.lead ? GIFT.lead.phone : '') + '" required>' +
       '<input placeholder="Delivery area in Dubai" required><button class="btn btn--p" type="submit">' + t('cart.confirm') + '</button></form>');
@@ -583,20 +603,22 @@ function openPDP(p) {
       '<div class="pdp__p"><b>' + money(price) + '</b><s>' + money(wasU) + '</s></div>' +
       '<span class="cd__sv">' + t('price.save') + ' ' + plain(wasU - price) + '</span>' +
       '<div class="pdp__tby">' +
-        '<div class="pdp__tby-r"><span>From</span><b>' + money(inst(price)) + '</b><em>x4 interest free</em>' +
+        '<div class="pdp__tby-r"><span>' + t('price.fromShort') + '</span><b>' + money(inst(price)) + '</b><em>x4 ' + t('trust.pay4Sub') + '</em>' +
         '<img class="tby" src="' + TABBY + '" alt="Tabby"></div>' +
         '<button class="pdp__tby-q" id="tbyHow">' + t('pdp.how') + '</button>' +
         '<p class="pdp__tby-x">The full price is ' + money(price) + '. Tabby splits it into four equal ' +
         'payments of ' + money(inst(price)) + ' with no interest and no fees. The "from" price on the ' +
         'home page is the lowest grade and storage of this model.</p></div>' +
-      '<div class="pdp__lb">Colour: <em>' + p.colors[sel.color][0] + '</em></div><div class="pdp__sw">' +
+      '<div class="pdp__lb">' + t('pdp.colour') + ' <em>' + p.colors[sel.color][0] + '</em></div><div class="pdp__sw">' +
       p.colors.map(function(c,i){ return '<button data-k="color" data-i="' + i + '" class="' + (i===sel.color?'on':'') + '" style="--sc:' + c[1] + '" aria-label="' + c[0] + '"></button>'; }).join('') + '</div>' +
-      '<div class="pdp__lb">Storage: <em>' + p.storage[sel.stor] + '</em></div><div class="pdp__o">' +
+      '<div class="pdp__lb">' + t('pdp.storage') + ' <em>' + p.storage[sel.stor] + '</em></div><div class="pdp__o">' +
       p.storage.map(function(s,i){ return '<button data-k="stor" data-i="' + i + '" class="' + (i===sel.stor?'on':'') + '">' + s + '</button>'; }).join('') + '</div>' +
-      '<div class="pdp__lb">Condition: <em>' + CONDS[sel.cond].n + '</em></div><div class="pdp__cn">' +
+      '<div class="pdp__lb">' + t('pdp.condition') + ' <em>' + CONDS[sel.cond].n + '</em></div><div class="pdp__cn">' +
       CONDS.map(function(c,i){ return '<button data-k="cond" data-i="' + i + '" class="' + (i===sel.cond?'on':'') + '">' +
-        '<div><b>Grade ' + c.k + ' · ' + c.n + '</b><i>' + c.d + '</i></div><span>' + money(Math.round(p.price*c.m)) + '</span></button>'; }).join('') + '</div>' +
-      '<div class="pdp__in"><span><b>In the box:</b> phone, cable</span><span><b>Warranty:</b> 12 months</span><span><b>Delivery:</b> today</span></div>' +
+        '<div><b>' + t('pdp.grade') + ' ' + c.k + ' · ' + c.n + '</b><i>' + c.d + '</i></div><span>' + money(Math.round(p.price*c.m)) + '</span></button>'; }).join('') + '</div>' +
+      '<div class="pdp__in"><span><b>' + t('pdp.box') + '</b> ' + t('pdp.boxV') + '</span>' +
+      '<span><b>' + t('pdp.warr') + '</b> ' + t('pdp.warrV') + '</span>' +
+      '<span><b>' + t('pdp.deliv') + '</b> ' + t('pdp.delivV') + '</span></div>' +
       '<div class="pdp__by"><button class="btn btn--p btn--l btn--full" id="pdpAdd">Add to cart · ' + money(price) + '</button>' +
       '<button class="pdp__al" id="pdpAlert"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7z"/><path d="M10 20h4"/></svg>' + t('pdp.drop') + '</button></div>';
   }
@@ -619,9 +641,8 @@ function openPDP(p) {
   log('Product viewed: <b>' + p.name + '</b>', { strong:true });
 }
 function askAlert(p) {
-  modal('<h3>' + t('pdp.watch') + '</h3><p>We message you the moment the ' + p.name +
-    ' drops in price or a better grade lands in stock. One message, no spam.</p>' +
-    '<form data-lead="Price alert: ' + p.name + '"><input type="tel" placeholder="WhatsApp number" required>' +
+  modal('<h3>' + t('pdp.watch') + '</h3><p>' + t('m.watch').replace('{p}', p.name) + '</p>' +
+    '<form data-lead="Price alert: ' + p.name + '"><input type="tel" placeholder="' + t('f.wa') + '" required>' +
     '<button class="btn btn--p" type="submit">' + t('pdp.watch') + '</button></form>');
 }
 
@@ -653,9 +674,9 @@ $('#cartBtn').addEventListener('click', function(){ openSheet('#cartDrawer'); })
 $('#wishBtn').addEventListener('click', function(){
   if (!wish.length) { toast('Your wishlist is empty'); return; }
   var names = wish.map(function(id){ return byId(id).name; }).join(', ');
-  modal('<h3>' + t('wish.title') + '</h3><p>' + names + '</p><p style="margin-top:10px">Want us to hold these and send a bundle price?</p>' +
+  modal('<h3>' + t('wish.title') + '</h3><p>' + names + '</p><p style="margin-top:10px">' + t('m.wish') + '</p>' +
     '<form data-lead="Wishlist bundle quote"><input type="tel" placeholder="WhatsApp number" required>' +
-    '<button class="btn btn--p" type="submit">Send me a bundle price</button></form>');
+    '<button class="btn btn--p" type="submit">' + t('m.wishCta') + '</button></form>');
 });
 function modal(html) {
   var m = $('#modal');
@@ -721,7 +742,7 @@ $('#finOut').addEventListener('click', function(e){
   var m = e.target.closest('[data-open]');
   if (m) { openPDP(byId(m.dataset.open)); return; }
   if (e.target.closest('#finLead')) {
-    modal('<h3>Send my shortlist</h3><p>We message the matches to your WhatsApp with live stock and prices, and hold them for 48 hours.</p>' +
+    modal('<h3>' + t('m.shortT') + '</h3><p>' + t('m.shortB') + '</p>' +
       '<form data-lead="Finder shortlist (budget ' + fin.budget + ', wants ' + (fin.priority || 'any') + ')">' +
       '<input placeholder="Your name" required><input type="tel" placeholder="WhatsApp number" required>' +
       '<button class="btn btn--p" type="submit">Send my shortlist</button></form>');
@@ -768,7 +789,7 @@ document.addEventListener('mouseout', function(e){
   exited = true;
   if (!GIFT.shown && !GIFT.done) { openGift(); return; }
   if (GIFT.done && !GIFT.unlocked) {
-    modal('<h3>Before you go</h3><p>Take ' + plain(RULES.promo.off) + ' off your first order over ' + plain(RULES.promo.minSpend) + '. We send the code to your WhatsApp.</p>' +
+    modal('<h3>' + t('m.exitT') + '</h3><p>' + t('m.exitB').replace('{n}', plain(RULES.promo.off)).replace('{m}', plain(RULES.promo.minSpend)) + '</p>' +
       '<form data-lead="Exit intent voucher"><input type="tel" placeholder="WhatsApp number" required>' +
       '<button class="btn btn--p" type="submit">Send me the code</button></form>');
     log('Exit intent triggered: recovery offer shown');
@@ -869,7 +890,11 @@ function renderDeals() {
 }
 function goDeal(i, manual) {
   dIdx = (i + DEALS.length) % DEALS.length;
-  $('#dealTrack').style.transform = 'translateX(' + (-dIdx * 100) + '%)';
+  /* In RTL the track sits right to left, so advancing means moving it the other
+     way. Without this the first slide appears to arrive from the wrong side and
+     the sequence reads last to first. */
+  var rtl = document.documentElement.dir === 'rtl';
+  $('#dealTrack').style.transform = 'translateX(' + ((rtl ? 1 : -1) * dIdx * 100) + '%)';
   $$('#dealPg .dpg').forEach(function (b, n) {
     b.classList.toggle('on', n === dIdx);
     b.classList.toggle('done', n < dIdx);
@@ -901,7 +926,10 @@ $('#dealTrack').addEventListener('click', function (e) {
   d.addEventListener('touchend', function (e) {
     if (x0 === null) return;
     var dx = e.changedTouches[0].clientX - x0;
-    if (Math.abs(dx) > 40) goDeal(dIdx + (dx < 0 ? 1 : -1), true); else goDeal(dIdx);
+    if (Math.abs(dx) > 40) {
+      var fwd = document.documentElement.dir === 'rtl' ? dx > 0 : dx < 0;
+      goDeal(dIdx + (fwd ? 1 : -1), true);
+    } else goDeal(dIdx);
     x0 = null;
   });
   d.addEventListener('mouseenter', pauseDeal);
@@ -1010,7 +1038,7 @@ renderDeals();
     if (e.target.closest('#tinBack')) {
       step = (step === 3 && brand && brand.k === 'other') ? 1 : step - 1;
       if (step < 1) step = 1;
-      if (step === 1) { brand = null; model = null; }
+      if (step === 1) { brand = null; model = null; TIN_ACTIVE = false; }
       if (step === 2) model = null;
       paint();
       return;
@@ -1020,6 +1048,7 @@ renderDeals();
 
     if (step === 1) {
       brand = BRANDS[i];
+      TIN_ACTIVE = true;
       log(t('log.tinBrand').replace('{b}', '<b>' + brand.n + '</b>'), { strong:true });
       step = brand.k === 'other' ? 3 : 2;
       paint();
@@ -1049,6 +1078,7 @@ renderDeals();
       '</div>' +
       '<button class="btn btn--p btn--full" id="tin2Lock" style="margin-top:10px">' + t('tin.cta') + '</button>' +
       '<p class="tin2__step" style="justify-content:center"><span>' + t('tin.hours') + '</span></p>';
+    TIN_ACTIVE = false;   /* request is ready, the gift prompt may fire again */
   }
 
   $('#tin2').addEventListener('click', function (e) {
@@ -1104,12 +1134,83 @@ renderGrid(); renderCart();
    Everything above is inside this module closure, so the redraw has to be
    registered from in here. Static markup is handled by applyI18n in i18n.js. */
 onLangChange(function () {
+  CONDS = conds();
+  BUNDLES = bundles();
   renderGrid();
   renderDeals();
   renderCart();
   paintAnno();
   paintRevs();
   finRun();
+  goDeal(dIdx);   /* direction may have flipped, recompute the track offset */
 });
+
+/* ================= standing gift reminder =================
+   Once the code is claimed it is easy to forget it exists until checkout, which
+   is exactly when it stops influencing the decision. A small glowing chip keeps
+   it in view the whole way round. */
+function showGiftFab() {
+  var f = $('#gfab');
+  if (!f) return;
+  $('#gfabAmt').innerHTML = t('gfab.off').replace('{n}', plain(RULES.promo.off));
+  $('#gfabSub').textContent = RULES.promo.code;
+  f.hidden = false;
+}
+if ($('#gfab')) {
+  $('#gfab').addEventListener('click', function () {
+    if (navigator.clipboard) navigator.clipboard.writeText(RULES.promo.code).catch(function () {});
+    toast(t('gfab.toast').replace('{c}', '<b>' + RULES.promo.code + '</b>')
+      .replace('{m}', plain(RULES.promo.minSpend)));
+    log('Tapped the standing gift reminder');
+  });
+}
+onLangChange(function () { if (GIFT.unlocked) showGiftFab(); });
+
+/* ================= welcome language chooser ================= */
+(function () {
+  var pop = $('#wpop');
+  if (!pop) return;
+  var CHOSEN = 'tdr-lang-chosen';
+  var already = false;
+  try { already = !!localStorage.getItem(CHOSEN); } catch (e) {}
+
+  function paint() {
+    $('#wpopT').textContent = t('wel.title');
+    $('#wpopP').textContent = t('wel.sub');
+    $('#wpopG').innerHTML = LANGS.map(function (l) {
+      return '<button type="button" data-w="' + l.code + '">' +
+        '<img class="lgf" src="assets/img/flag/' + l.code + '.png" alt="" width="26" height="18">' +
+        '<b>' + l.name + '</b></button>';
+    }).join('');
+  }
+  function close() {
+    pop.hidden = true;
+    document.body.style.overflow = '';
+    try { localStorage.setItem(CHOSEN, '1'); } catch (e) {}
+  }
+  pop.addEventListener('click', function (e) {
+    if (e.target.closest('#wpopX') || e.target.classList.contains('wpop__s')) { close(); return; }
+    var b = e.target.closest('[data-w]');
+    if (!b) return;
+    var code = b.getAttribute('data-w');
+    setLang(code);
+    log('Chose ' + code.toUpperCase() + ' from the welcome prompt');
+    close();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) close(); });
+
+  /* if the language is changed from the header while this is open, keep it in step */
+  onLangChange(function () { if (!pop.hidden) paint(); });
+
+  /* A beat, not instantly. Long enough to read the headline and see a phone,
+     short enough that nobody has started tapping. */
+  if (!already) setTimeout(function () {
+    if (!pop.hidden) return;
+    if (TIN_ACTIVE || (GIFT.shown && !GIFT.done)) return;  /* never stack prompts */
+    paint();
+    pop.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }, 2800);
 })();
 
+})();

@@ -23,9 +23,11 @@
 @font-face{font-family:'NotoDeva';src:url('../fonts/hi-700.woff2') format('woff2');
   font-weight:700 900;font-style:normal;font-display:swap}
 
-@font-face{font-family:'NastaliqUrdu';src:url('../fonts/ur-400.woff2') format('woff2');
-  font-weight:400 600;font-style:normal;font-display:swap}
-@font-face{font-family:'NastaliqUrdu';src:url('../fonts/ur-700.woff2') format('woff2');
+@font-face{font-family:'UrduNaskh';src:url('../fonts/ur-n-400.woff2') format('woff2');
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'UrduNaskh';src:url('../fonts/ur-n-600.woff2') format('woff2');
+  font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'UrduNaskh';src:url('../fonts/ur-n-700.woff2') format('woff2');
   font-weight:700 900;font-style:normal;font-display:swap}
 
 /* The Latin family stays first in every stack so digits, model names and the
@@ -38,20 +40,14 @@
 :root[data-lang="hi"] button,:root[data-lang="hi"] select,:root[data-lang="hi"] textarea{
   font-family:var(--f),'NotoDeva',system-ui,sans-serif}
 :root[data-lang="ur"] body,:root[data-lang="ur"] input,
-:root[data-lang="ur"] button,:root[data-lang="ur"] select,:root[data-lang="ur"] textarea{
-  font-family:var(--f),'PlexArabic',system-ui,sans-serif}
+:root[data-lang="ur"] button,:root[data-lang="ur"] select,:root[data-lang="ur"] textarea,
+:root[data-lang="ur"] h1,:root[data-lang="ur"] h2,:root[data-lang="ur"] h3{
+  font-family:var(--f),'UrduNaskh','PlexArabic',system-ui,sans-serif}
 
-/* display face */
-:root[data-lang="ur"] h1,:root[data-lang="ur"] h2,
-:root[data-lang="ur"] .dsl__n,:root[data-lang="ur"] .gtile__in h3,
-:root[data-lang="ur"] .tin2__hd b,:root[data-lang="ur"] .sh h2{
-  font-family:var(--f),'NastaliqUrdu',serif;line-height:1.85;padding-block:.1em}
-
-/* Nastaliq hangs well below the baseline and stacks its words on a slope, so it
-   needs room that a Latin sans does not. Without this every button clips. */
-:root[data-lang="ur"] body{line-height:1.75}
-:root[data-lang="ur"] .btn{min-height:50px;line-height:1.6}
-:root[data-lang="ur"] .eyb{line-height:1.9}
+/* Naskh sits on a normal baseline, so the extra room Nastaliq needed is gone. */
+:root[data-lang="ur"] body{line-height:1.6}
+:root[data-lang="ur"] h1{line-height:1.25}
+:root[data-lang="ur"] h2{line-height:1.3}
 
 /* Devanagari sits taller than Latin and its matras need a little headroom. */
 :root[data-lang="hi"] body{line-height:1.7}
@@ -212,8 +208,8 @@
 .tin2__chosen[data-b="other"] i{display:none}
 
 /* ============ language switcher: flags ============ */
-.lang__b .fl{width:22px;height:15px;border-radius:3px;object-fit:cover;
-  box-shadow:0 0 0 1px rgba(0,0,0,.08);display:block}
+.lang__b .lgf{width:22px;height:15px;border-radius:3px;object-fit:cover;display:block;
+  box-shadow:0 0 0 1px rgba(12,21,36,.22)}
 .lang__b svg{display:none}
 
 
@@ -254,31 +250,126 @@
    itself never mirrors with the page: a picker that flips its own layout looks
    broken rather than localised.
 
-   The names are set in Naskh, not Nastaliq, for the same reason the rest of the
-   small text is: this is a 14px UI label, not display type. It also keeps all
-   four rows at one height. */
+   Every name is set in the same Naskh stack, which keeps all four rows one
+   height. */
 .lang__m{direction:ltr;padding:6px;min-width:184px}
+/* Flex, not grid. A grid track would not vertically centre the flag image: it
+   sat flush to the top of its track while the name and code centred correctly.
+   Flexbox centres a replaced element reliably. */
 .lang__m button{
-  display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:12px;
-  width:100%;min-height:42px;padding:8px 11px;
+  display:flex;align-items:center;gap:12px;
+  width:100%;min-height:46px;padding:9px 11px;
   border:0;border-radius:10px;background:transparent;cursor:pointer;
   direction:ltr;text-align:left}
 .lang__m button:hover{background:var(--paper)}
 .lang__m button.on{background:var(--blue-t)}
 
-.lang__m .fl{width:26px;height:18px;border-radius:3px;object-fit:cover;
-  box-shadow:0 0 0 1px rgba(0,0,0,.09);display:block}
+/* Named .lgf, not .fl: style.css already uses .fl for the product filter chip
+   row, and its margin-bottom:18px was landing on every flag image. That is what
+   pushed the flags 9px above their row. Second class collision in this project,
+   after .sh. */
+.lang__m .lgf{flex:0 0 26px;width:26px;height:18px;border-radius:3px;object-fit:cover;display:block;
+  /* several of these flags carry white at the edge, which vanishes against the
+     menu and makes them read as different sizes. A real outline gives each one
+     visible bounds. */
+  box-shadow:0 0 0 1px rgba(12,21,36,.22)}
 
+/* Arabic, Devanagari and Urdu faces place their ink lower in the line box than
+   Latin does, so centring the boxes still leaves the names sitting low against
+   the flags. A line box that hugs the em height removes most of that difference,
+   and the cell centres what is left. */
 .lang__m button b{
-  font-family:var(--f),'PlexArabic','NotoDeva',system-ui,sans-serif;
-  font-size:.92rem;font-weight:600;line-height:1.3;
+  flex:1;min-width:0;
+  font-family:var(--f),'PlexArabic','UrduNaskh','NotoDeva',system-ui,sans-serif;
+  font-size:.92rem;font-weight:600;line-height:1.1;
   color:var(--ink);text-align:left;unicode-bidi:isolate;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lang__m button.on b{color:var(--blue)}
 
 .lang__m button span{
   font-family:var(--m);font-size:.64rem;font-weight:700;letter-spacing:.09em;
-  text-transform:uppercase;color:var(--ink3);justify-self:end}
+  text-transform:uppercase;color:var(--ink3);flex:0 0 auto}
 .lang__m button.on span{color:var(--blue)}
 
 @media (max-width:560px){ .lang__m{min-width:180px} }
+
+
+/* ============ direction aware motion ============ */
+
+/* Marquees run toward the reading direction. Leaving them scrolling left in an
+   RTL page makes the content appear to arrive backwards. */
+@keyframes oslide-rtl{to{transform:translateX(50%)}}
+@keyframes mq-rtl{to{transform:translateX(50%)}}
+[dir="rtl"] .orail__t{animation-name:oslide-rtl}
+[dir="rtl"] .anno__t{animation-name:mq-rtl}
+
+/* Previous and next swap sides, so the control the visitor reads as "forward"
+   is the one that advances. */
+[dir="rtl"] .deal__nv--p{left:auto;right:-14px}
+[dir="rtl"] .deal__nv--n{right:auto;left:-14px}
+
+
+/* ============ welcome language chooser ============
+   Shown a beat after load, not instantly, so the visitor sees what the shop is
+   before being asked anything. Once only: an explicit choice is remembered and
+   the prompt never returns. */
+/* A display value in a class rule beats the browser default [hidden]{display:none},
+   so both of these have to opt back out explicitly or they render while hidden. */
+.wpop[hidden],.gfab[hidden]{display:none}
+.wpop{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:20px}
+.wpop__s{position:absolute;inset:0;background:rgba(12,21,36,.62);backdrop-filter:blur(3px);
+  animation:wfade .28s var(--e) both}
+.wpop__b{position:relative;width:min(340px,100%);background:#fff;border-radius:22px;
+  padding:26px 22px 20px;box-shadow:0 40px 90px -25px rgba(0,0,0,.55);text-align:center;
+  animation:wrise .34s var(--e) both}
+@keyframes wfade{from{opacity:0}}
+@keyframes wrise{from{opacity:0;transform:translateY(14px) scale(.97)}}
+.wpop__x{position:absolute;top:10px;inset-inline-end:12px;width:30px;height:30px;border:0;
+  border-radius:99px;background:transparent;color:var(--ink3);font-size:22px;line-height:1;cursor:pointer}
+.wpop__x:hover{background:var(--paper);color:var(--ink)}
+.wpop__b h3{margin:0 0 5px;font-size:1.22rem;font-weight:800;letter-spacing:-.02em}
+.wpop__b p{margin:0 0 16px;font-size:.88rem;color:var(--ink2);line-height:1.45}
+.wpop__g{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.wpop__g button{display:flex;align-items:center;gap:10px;padding:11px 12px;
+  border:1.5px solid var(--line2);border-radius:14px;background:#fff;cursor:pointer;
+  transition:.2s var(--e);direction:ltr;text-align:left}
+.wpop__g button:hover{border-color:var(--blue);background:var(--blue-t)}
+.wpop__g .lgf{flex:0 0 26px;width:26px;height:18px;border-radius:3px;object-fit:cover;
+  display:block;box-shadow:0 0 0 1px rgba(12,21,36,.22)}
+.wpop__g b{flex:1;min-width:0;font-size:.88rem;font-weight:700;color:var(--ink);
+  unicode-bidi:isolate;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ============ standing gift reminder ============
+   Bottom right, stacked above the WhatsApp button, so the cart bar along the
+   bottom is never touched. */
+.gfab{position:fixed;right:16px;bottom:80px;z-index:68;
+  display:flex;align-items:center;gap:9px;padding:8px 14px 8px 10px;
+  border:0;border-radius:99px;cursor:pointer;
+  background:linear-gradient(135deg,#E0B341,#C8901C);color:#2A1E05;
+  box-shadow:0 10px 26px -8px rgba(200,144,28,.75);
+  animation:gpulse 2.6s ease-out infinite}
+body.has-bar .gfab{bottom:144px}
+.gfab__i{display:grid;place-items:center;width:26px;height:26px;border-radius:99px;
+  background:rgba(255,255,255,.4)}
+.gfab__i svg{width:15px;height:15px;fill:none;stroke:#2A1E05;stroke-width:1.9;
+  stroke-linejoin:round}
+.gfab__t{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
+.gfab__t b{font-size:.84rem;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.gfab__t em{font-style:normal;font-size:.64rem;font-weight:700;opacity:.72;
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+@keyframes gpulse{
+  0%{box-shadow:0 10px 26px -8px rgba(200,144,28,.75),0 0 0 0 rgba(224,179,65,.55)}
+  70%{box-shadow:0 10px 26px -8px rgba(200,144,28,.75),0 0 0 13px rgba(224,179,65,0)}
+  100%{box-shadow:0 10px 26px -8px rgba(200,144,28,.75),0 0 0 0 rgba(224,179,65,0)}
+}
+[dir="rtl"] .gfab{right:auto;left:16px}
+[dir="rtl"] .gfab__t{align-items:flex-end}
+@media(max-width:560px){
+  .gfab{right:12px;bottom:78px;padding:7px 12px 7px 9px}
+  body.has-bar .gfab{bottom:calc(var(--sbar-h) + 72px)}
+  [dir="rtl"] .gfab{left:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .gfab{animation:none}
+  .wpop__s,.wpop__b{animation:none}
+}

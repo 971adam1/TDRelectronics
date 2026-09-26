@@ -932,6 +932,207 @@ for (var _gl in I18N_G9) for (var _gk in I18N_G9[_gl]) I18N[_gl][_gk] = I18N_G9[
 var I18N_C9 = {"en":{"gift.copied":"Copied"},"ar":{"gift.copied":"تم النسخ"},"hi":{"gift.copied":"कॉपी हो गया"},"ur":{"gift.copied":"کاپی ہو گیا"}};
 for (var _cl in I18N_C9) for (var _ck in I18N_C9[_cl]) I18N[_cl][_ck] = I18N_C9[_cl][_ck];
 
+
+var I18N_V10 = {
+ "en": {
+  "wel.title": "Welcome to TDR Electronic",
+  "wel.sub": "Pick the language you would like to shop in.",
+  "gfab.off": "{n} off waiting",
+  "gfab.toast": "Code {c} copied. Applies on orders over {m}."
+ },
+ "ar": {
+  "wel.title": "أهلًا بك في TDR Electronic",
+  "wel.sub": "اختر اللغة التي تفضل التسوق بها.",
+  "gfab.off": "{n} خصم بانتظارك",
+  "gfab.toast": "تم نسخ الكود {c}. يسري على الطلبات فوق {m}."
+ },
+ "hi": {
+  "wel.title": "TDR Electronic में आपका स्वागत है",
+  "wel.sub": "जिस भाषा में खरीदारी करनी है वह चुनें.",
+  "gfab.off": "{n} की छूट बाकी है",
+  "gfab.toast": "कोड {c} कॉपी हो गया. {m} से ऊपर के ऑर्डर पर लागू."
+ },
+ "ur": {
+  "wel.title": "TDR Electronic میں خوش آمدید",
+  "wel.sub": "جس زبان میں خریداری کرنا چاہتے ہیں وہ چنیں۔",
+  "gfab.off": "{n} کی رعایت باقی ہے",
+  "gfab.toast": "کوڈ {c} کاپی ہو گیا۔ {m} سے اوپر کے آرڈر پر لاگو۔"
+ }
+};
+for (var _al in I18N_V10) for (var _ak in I18N_V10[_al]) I18N[_al][_ak] = I18N_V10[_al][_ak];
+
+
+var I18N_G3 = {
+ "en": {
+  "gift.unlocked": "Unlocked, {n}",
+  "gift.terms": "{n} off your first order over {m}. Already saved to your checkout, just tap it in the cart."
+ },
+ "ar": {
+  "gift.unlocked": "تم الفتح يا {n}",
+  "gift.terms": "خصم {n} على أول طلب فوق {m}. محفوظ بالفعل في سلتك، اضغط عليه عند الدفع."
+ },
+ "hi": {
+  "gift.unlocked": "अनलॉक हो गया, {n}",
+  "gift.terms": "{m} से ऊपर के पहले ऑर्डर पर {n} की छूट. आपके चेकआउट में सेव है, कार्ट में बस टैप करें."
+ },
+ "ur": {
+  "gift.unlocked": "کھل گیا، {n}",
+  "gift.terms": "{m} سے اوپر کے پہلے آرڈر پر {n} کی رعایت۔ آپ کے چیک آؤٹ میں محفوظ ہے، ٹوکری میں بس ٹیپ کریں۔"
+ }
+};
+for (var _3l in I18N_G3) for (var _3k in I18N_G3[_3l]) I18N[_3l][_3k] = I18N_G3[_3l][_3k];
+
+
+var I18N_M = {
+ "en": {
+  "m.reserve": "Confirm your details and we deliver today. Pay on delivery or online, your choice.",
+  "m.watch": "We message you the moment the {p} drops in price. No spam, just the one alert.",
+  "m.wish": "Want us to hold these and send a bundle price?",
+  "m.shortT": "Send my shortlist",
+  "m.shortB": "We message the matches to your WhatsApp with live stock and prices, and hold them for 48 hours.",
+  "m.exitT": "Before you go",
+  "m.exitB": "Take {n} off your first order over {m}. We send the code to your WhatsApp."
+ },
+ "ar": {
+  "m.reserve": "أكّد بياناتك ونوصل لك اليوم. ادفع عند الاستلام أو أونلاين، الخيار لك.",
+  "m.watch": "نراسلك فور انخفاض سعر {p}. بدون إزعاج، تنبيه واحد فقط.",
+  "m.wish": "هل تريد أن نحجزها لك ونرسل سعر باقة؟",
+  "m.shortT": "أرسلوا لي القائمة",
+  "m.shortB": "نرسل لك الخيارات المطابقة على واتساب مع المتوفر فعليًا والأسعار، ونحجزها 48 ساعة.",
+  "m.exitT": "قبل أن تغادر",
+  "m.exitB": "احصل على خصم {n} على أول طلب فوق {m}. نرسل لك الكود على واتساب."
+ },
+ "hi": {
+  "m.reserve": "अपनी जानकारी पक्की करें, हम आज ही डिलीवर करेंगे. डिलीवरी पर या ऑनलाइन, आपकी मर्ज़ी.",
+  "m.watch": "{p} की कीमत गिरते ही हम मैसेज करेंगे. कोई स्पैम नहीं, बस एक अलर्ट.",
+  "m.wish": "क्या हम इन्हें रोककर बंडल कीमत भेजें?",
+  "m.shortT": "मेरी लिस्ट भेजें",
+  "m.shortB": "हम मैच होने वाले फ़ोन व्हाट्सऐप पर भेजेंगे, लाइव स्टॉक और कीमत के साथ, और 48 घंटे रोक रखेंगे.",
+  "m.exitT": "जाने से पहले",
+  "m.exitB": "{m} से ऊपर के पहले ऑर्डर पर {n} की छूट लें. कोड व्हाट्सऐप पर भेजेंगे."
+ },
+ "ur": {
+  "m.reserve": "اپنی تفصیلات کی تصدیق کریں، ہم آج ہی پہنچا دیں گے۔ ڈیلیوری پر یا آن لائن، آپ کی مرضی۔",
+  "m.watch": "{p} کی قیمت گرتے ہی ہم پیغام بھیجیں گے۔ کوئی اسپیم نہیں، بس ایک الرٹ۔",
+  "m.wish": "کیا ہم انہیں روک کر بنڈل قیمت بھیجیں؟",
+  "m.shortT": "میری فہرست بھیجیں",
+  "m.shortB": "ہم مماثل فون واٹس ایپ پر بھیجیں گے، دستیاب اسٹاک اور قیمت کے ساتھ، اور 48 گھنٹے روک رکھیں گے۔",
+  "m.exitT": "جانے سے پہلے",
+  "m.exitB": "{m} سے اوپر کے پہلے آرڈر پر {n} کی رعایت لیں۔ کوڈ واٹس ایپ پر بھیجیں گے۔"
+ }
+};
+for (var _ml in I18N_M) for (var _mk in I18N_M[_ml]) I18N[_ml][_mk] = I18N_M[_ml][_mk];
+
+
+var I18N_L2 = {
+ "en": {
+  "cart.saving2": "You are saving {n}",
+  "cart.qualify": "You qualify for free delivery",
+  "m.wishCta": "Send me a bundle price"
+ },
+ "ar": {
+  "cart.saving2": "أنت توفّر {n}",
+  "cart.qualify": "أنت مؤهل للتوصيل المجاني",
+  "m.wishCta": "أرسلوا لي سعر الباقة"
+ },
+ "hi": {
+  "cart.saving2": "आपकी बचत {n}",
+  "cart.qualify": "आपको मुफ़्त डिलीवरी मिलेगी",
+  "m.wishCta": "मुझे बंडल कीमत भेजें"
+ },
+ "ur": {
+  "cart.saving2": "آپ کی بچت {n}",
+  "cart.qualify": "آپ مفت ڈیلیوری کے اہل ہیں",
+  "m.wishCta": "مجھے بنڈل قیمت بھیجیں"
+ }
+};
+for (var _2l in I18N_L2) for (var _2k in I18N_L2[_2l]) I18N[_2l][_2k] = I18N_L2[_2l][_2k];
+
+
+var I18N_L3 = {
+ "en": {
+  "pdp.colour": "Colour:",
+  "pdp.storage": "Storage:",
+  "pdp.condition": "Condition:",
+  "pdp.grade": "Grade",
+  "pdp.box": "In the box:",
+  "pdp.boxV": "phone, cable",
+  "pdp.warr": "Warranty:",
+  "pdp.warrV": "12 months",
+  "pdp.deliv": "Delivery:",
+  "pdp.delivV": "today",
+  "cart.add": "Add",
+  "gr.cTxt2": "Visible scratches, works perfectly",
+  "gr.bTxt2": "Light marks, hard to spot",
+  "gr.aTxt2": "Like new, no visible wear",
+  "acc.case": "Protective case",
+  "acc.glass": "Tempered screen guard",
+  "acc.chg": "20W fast charger"
+ },
+ "ar": {
+  "pdp.colour": "اللون:",
+  "pdp.storage": "السعة:",
+  "pdp.condition": "الحالة:",
+  "pdp.grade": "درجة",
+  "pdp.box": "في العلبة:",
+  "pdp.boxV": "الهاتف وكابل",
+  "pdp.warr": "الضمان:",
+  "pdp.warrV": "12 شهرًا",
+  "pdp.deliv": "التوصيل:",
+  "pdp.delivV": "اليوم",
+  "cart.add": "أضف",
+  "gr.cTxt2": "خدوش ظاهرة، يعمل تمامًا",
+  "gr.bTxt2": "علامات خفيفة يصعب ملاحظتها",
+  "gr.aTxt2": "كالجديد، بلا أثر استعمال",
+  "acc.case": "غطاء حماية",
+  "acc.glass": "واقي شاشة مقوّى",
+  "acc.chg": "شاحن سريع 20 واط"
+ },
+ "hi": {
+  "pdp.colour": "रंग:",
+  "pdp.storage": "स्टोरेज:",
+  "pdp.condition": "हालत:",
+  "pdp.grade": "ग्रेड",
+  "pdp.box": "बॉक्स में:",
+  "pdp.boxV": "फ़ोन, केबल",
+  "pdp.warr": "वारंटी:",
+  "pdp.warrV": "12 महीने",
+  "pdp.deliv": "डिलीवरी:",
+  "pdp.delivV": "आज",
+  "cart.add": "जोड़ें",
+  "gr.cTxt2": "दिखने वाले स्क्रैच, काम बिल्कुल सही",
+  "gr.bTxt2": "हल्के निशान, मुश्किल से दिखें",
+  "gr.aTxt2": "नए जैसा, कोई निशान नहीं",
+  "acc.case": "सुरक्षा कवर",
+  "acc.glass": "टेम्पर्ड स्क्रीन गार्ड",
+  "acc.chg": "20W फ़ास्ट चार्जर"
+ },
+ "ur": {
+  "pdp.colour": "رنگ:",
+  "pdp.storage": "اسٹوریج:",
+  "pdp.condition": "حالت:",
+  "pdp.grade": "گریڈ",
+  "pdp.box": "ڈبے میں:",
+  "pdp.boxV": "فون، کیبل",
+  "pdp.warr": "وارنٹی:",
+  "pdp.warrV": "12 ماہ",
+  "pdp.deliv": "ڈیلیوری:",
+  "pdp.delivV": "آج",
+  "cart.add": "شامل کریں",
+  "gr.cTxt2": "نظر آنے والی خراشیں، کام بالکل ٹھیک",
+  "gr.bTxt2": "ہلکے نشان، مشکل سے نظر آئیں",
+  "gr.aTxt2": "نئے جیسا، کوئی نشان نہیں",
+  "acc.case": "حفاظتی کور",
+  "acc.glass": "ٹیمپرڈ اسکرین گارڈ",
+  "acc.chg": "20W فاسٹ چارجر"
+ }
+};
+for (var _3al in I18N_L3) for (var _3ak in I18N_L3[_3al]) I18N[_3al][_3ak] = I18N_L3[_3al][_3ak];
+
+
+var I18N_L4 = {"en":{"acc.buds":"Wireless earbuds","acc.bank":"10000mAh power bank"},"ar":{"acc.buds":"سماعات لاسلكية","acc.bank":"باور بانك 10000 مللي أمبير"},"hi":{"acc.buds":"वायरलेस ईयरबड्स","acc.bank":"10000mAh पावर बैंक"},"ur":{"acc.buds":"وائرلیس ایئر بڈز","acc.bank":"10000mAh پاور بینک"}};
+for (var _4l in I18N_L4) for (var _4k in I18N_L4[_4l]) I18N[_4l][_4k] = I18N_L4[_4l][_4k];
+
 /* ------------------------------------------------------------------ runtime */
 
 var LANG = 'en';
@@ -1000,7 +1201,7 @@ function setLang(code) {
   var SHORT = { en: 'EN', ar: 'AR', hi: 'HI', ur: 'UR' };
 
   function flag(code, cls) {
-    return '<img class="fl ' + (cls || '') + '" src="assets/img/flag/' + code +
+    return '<img class="lgf ' + (cls || '') + '" src="assets/img/flag/' + code +
       '.png" alt="" width="26" height="18" loading="lazy">';
   }
   menu.innerHTML = LANGS.map(function (l) {
@@ -1010,7 +1211,7 @@ function setLang(code) {
   /* the trigger shows the flag of whatever is active */
   function paintTrigger() {
     var g = btn.querySelector('svg');
-    var old = btn.querySelector('.fl');
+    var old = btn.querySelector('.lgf');
     if (old) old.remove();
     if (g) g.insertAdjacentHTML('afterend', flag(LANG));
     else btn.insertAdjacentHTML('afterbegin', flag(LANG));
@@ -1027,6 +1228,7 @@ function setLang(code) {
     var b = e.target.closest('[data-lang-opt]');
     if (!b) return;
     setLang(b.getAttribute('data-lang-opt'));
+    try { localStorage.setItem('tdr-lang-chosen', '1'); } catch (e) {}
     now.textContent = SHORT[LANG];
     paintTrigger();
     close();
