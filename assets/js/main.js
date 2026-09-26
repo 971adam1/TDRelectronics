@@ -211,14 +211,50 @@ function toast(msg) {
 
 /* ---------- gift flow ---------- */
 var GIFT = { shown:false, done:false, score:0, lead:null, unlocked:false };
+/* Kept so the existing call sites still work, but the score no longer opens
+   anything on its own. It only records interest for the insight panel. */
 function intent(n) {
   if (GIFT.shown || GIFT.done) return;
-  /* Never cut across the trade in. The score keeps accruing, so the prompt still
-     fires the moment they finish or back out. */
-  if (TIN_ACTIVE) { GIFT.score += n; return; }
   GIFT.score += n;
-  if (GIFT.score >= 3) setTimeout(openGift, 700);
 }
+
+/* The two standing offers. The prompt is the third attempt, not the first. */
+var PASSED = { tin:false, tile:false };
+
+function maybeGift() {
+  if (GIFT.shown || GIFT.done) return;
+  if (TIN_ACTIVE) return;                 /* never cut across a trade in */
+  if (!PASSED.tin || !PASSED.tile) return;
+  setTimeout(function () {
+    if (GIFT.shown || GIFT.done || TIN_ACTIVE) return;
+    openGift();
+  }, 900);                                /* a beat after the tile leaves view */
+}
+
+/* Marks an element as passed once its bottom has gone above the viewport top,
+   which means the visitor scrolled by it rather than merely glimpsing it. */
+function watchPassed(sels, key) {
+  function pick() {
+    for (var i = 0; i < sels.length; i++) {
+      var e = document.querySelector(sels[i]);
+      if (e) return e;
+    }
+    return null;
+  }
+  function check() {
+    if (PASSED[key]) return true;
+    var el = pick();
+    if (!el) return false;
+    var r = el.getBoundingClientRect();
+    if (r.bottom < 0) { PASSED[key] = true; maybeGift(); return true; }
+    return false;
+  }
+  check();
+  addEventListener('scroll', function () { check(); }, { passive:true });
+}
+watchPassed(['#tin2', '#tradein'], 'tin');
+/* the grid is built by JS, so the tile only exists after the first render */
+addEventListener('load', function () { watchPassed(['#gtile', '#shop'], 'tile'); });
 var gf = $('#giftFlow'), gbox = $('#giftBox');
 function openGift() {
   if (GIFT.shown || GIFT.done) return;
@@ -387,8 +423,8 @@ function giftTile() {
   if (GIFT.unlocked) {
     return '<article class="cd gtile gtile--done"><div class="gtile__in">' +
       '<div class="gtile__i"><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-9"/></svg></div>' +
-      '<h3>' + RULES.promo.code + ' is ready</h3>' +
-      '<p>' + plain(RULES.promo.off) + ' off once your cart passes ' + plain(RULES.promo.minSpend) + '.</p>' +
+      '<h3>' + t('gtile.ready').replace('{c}', RULES.promo.code) + '</h3>' +
+      '<p>' + t('gtile.terms').replace('{n}', plain(RULES.promo.off)).replace('{m}', plain(RULES.promo.minSpend)) + '</p>' +
       '</div></article>';
   }
   return '<article class="cd gtile" id="gtile"><div class="gtile__in">' +

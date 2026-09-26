@@ -1133,6 +1133,27 @@ for (var _3al in I18N_L3) for (var _3ak in I18N_L3[_3al]) I18N[_3al][_3ak] = I18
 var I18N_L4 = {"en":{"acc.buds":"Wireless earbuds","acc.bank":"10000mAh power bank"},"ar":{"acc.buds":"سماعات لاسلكية","acc.bank":"باور بانك 10000 مللي أمبير"},"hi":{"acc.buds":"वायरलेस ईयरबड्स","acc.bank":"10000mAh पावर बैंक"},"ur":{"acc.buds":"وائرلیس ایئر بڈز","acc.bank":"10000mAh پاور بینک"}};
 for (var _4l in I18N_L4) for (var _4k in I18N_L4[_4l]) I18N[_4l][_4k] = I18N_L4[_4l][_4k];
 
+
+var I18N_GT = {
+ "en": {
+  "gtile.ready": "{c} is ready",
+  "gtile.terms": "{n} off once your cart passes {m}."
+ },
+ "ar": {
+  "gtile.ready": "{c} جاهز",
+  "gtile.terms": "خصم {n} عندما تتجاوز سلتك {m}."
+ },
+ "hi": {
+  "gtile.ready": "{c} तैयार है",
+  "gtile.terms": "कार्ट {m} से ऊपर जाते ही {n} की छूट."
+ },
+ "ur": {
+  "gtile.ready": "{c} تیار ہے",
+  "gtile.terms": "ٹوکری {m} سے اوپر جاتے ہی {n} کی رعایت۔"
+ }
+};
+for (var _gtl in I18N_GT) for (var _gtk in I18N_GT[_gtl]) I18N[_gtl][_gtk] = I18N_GT[_gtl][_gtk];
+
 /* ------------------------------------------------------------------ runtime */
 
 var LANG = 'en';

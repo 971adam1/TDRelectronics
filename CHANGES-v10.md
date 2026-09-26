@@ -150,3 +150,64 @@ clean in Arabic, Hindi and Urdu.**
 - Gift chip appears on claim, at the right offset with and without the cart bar
 - Picker alignment measured, not eyeballed: one shared centre per row across five
   language and width combinations
+
+---
+
+## v10.1 — cache policy and the gift trigger
+
+### The phone was serving a year old cache, and that was my fault
+
+`vercel.json` told browsers to treat everything under `/assets/` as:
+
+```
+Cache-Control: public, max-age=31536000, immutable
+```
+
+`immutable` means "never revalidate, do not even ask". That is correct for files
+whose names change when their contents change. Mine never do: it is always
+`main.js`, always `i18n.css`. So any returning visitor kept the old copies for a
+year, and a hard refresh would not shift them either.
+
+Desktop looked right only because it had no cached copy to begin with.
+
+Three changes:
+
+- **Images and fonts stay immutable**, because those genuinely do get new names
+  when they change (`ur-400` became `ur-n-400`, for instance).
+- **CSS and JS now revalidate on every load.**
+- Every stylesheet and script reference carries `?v=10`. That is what actually
+  rescues a phone already holding a stale copy: a different URL, so the old cache
+  entry simply does not apply. **Bump this number on any deploy that changes CSS
+  or JS.**
+
+### The gift prompt now waits for two refusals
+
+It was firing off a scroll depth and dwell score, which made it arrive out of
+nowhere.
+
+It now stays silent until the visitor has scrolled past **both** standing offers
+without taking either:
+
+1. the trade in card in the hero
+2. the gift tile sitting inside the product grid
+
+Only then, and only after a further beat, does it appear. Anyone who engages with
+either offer never sees a popup at all, which is rather the point of having the
+offers there.
+
+The old scroll and dwell signals still accrue for the insight panel; they just no
+longer open anything.
+
+Verified as four separate cases:
+
+| Behaviour | Prompt |
+| --- | --- |
+| Sat on the hero for five seconds | does not appear |
+| Scrolled past the trade in only | does not appear |
+| Scrolled past the trade in **and** the gift tile | appears |
+| Started a trade in, then scrolled | does not appear |
+
+If a filter narrows the grid to three cards or fewer the tile is not placed, so
+the shop section itself becomes the second gate.
+
+The unlocked gift tile also still carried two English strings. Keyed.
