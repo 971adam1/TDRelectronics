@@ -30,19 +30,30 @@
 @font-face{font-family:'UrduNaskh';src:url('../fonts/ur-n-700.woff2') format('woff2');
   font-weight:700 900;font-style:normal;font-display:swap}
 
-/* The Latin family stays first in every stack so digits, model names and the
-   wordmark keep rendering in the brand face. The script font only picks up the
-   characters the Latin face has no glyph for, which is exactly what we want. */
+/* The Latin brand face stays first so digits, model names and the wordmark
+   keep rendering in Manrope. The script font picks up whatever Manrope has no
+   glyph for, which is everything non-Latin, and that is what we want.
+
+   This has to be the literal font name, not var(--f). --f itself is a stack
+   ("Manrope", system-ui, sans-serif), and substituting a variable into a
+   font-family list is a plain text substitution: var(--f) here would expand
+   to three entries, pushing the generic system-ui/sans-serif fallbacks in
+   ahead of our chosen script font. On Windows in particular, Segoe UI at
+   regular weight successfully substitutes *something* for Arabic script via
+   OS-level font linking, so Chrome never got as far as UrduNaskh at all, the
+   text only happened to look right on elements bold enough that the same
+   substitution failed. Keeping this to the single literal font name is what
+   makes the fallback behave the way the comment above describes. */
 :root[data-lang="ar"] body,:root[data-lang="ar"] input,
 :root[data-lang="ar"] button,:root[data-lang="ar"] select,:root[data-lang="ar"] textarea{
-  font-family:var(--f),'PlexArabic',system-ui,sans-serif}
+  font-family:'Manrope','PlexArabic',system-ui,sans-serif}
 :root[data-lang="hi"] body,:root[data-lang="hi"] input,
 :root[data-lang="hi"] button,:root[data-lang="hi"] select,:root[data-lang="hi"] textarea{
-  font-family:var(--f),'NotoDeva',system-ui,sans-serif}
+  font-family:'Manrope','NotoDeva',system-ui,sans-serif}
 :root[data-lang="ur"] body,:root[data-lang="ur"] input,
 :root[data-lang="ur"] button,:root[data-lang="ur"] select,:root[data-lang="ur"] textarea,
 :root[data-lang="ur"] h1,:root[data-lang="ur"] h2,:root[data-lang="ur"] h3{
-  font-family:var(--f),'UrduNaskh','PlexArabic',system-ui,sans-serif}
+  font-family:'Manrope','UrduNaskh','PlexArabic',system-ui,sans-serif}
 
 /* Naskh sits on a normal baseline, so the extra room Nastaliq needed is gone. */
 :root[data-lang="ur"] body{line-height:1.6}
@@ -75,9 +86,12 @@
 [dir="rtl"] .rc svg,[dir="rtl"] .ochip svg{transform:scaleX(-1)}
 [dir="rtl"] .tin2__swap{transform:scaleX(-1)}
 
-/* The deal carousel translates by percentage, so in RTL it has to go the other
-   way. Handled in JS, but the track itself needs the row reversed. */
-[dir="rtl"] .deal__tr{flex-direction:row-reverse}
+/* The deal carousel is translated by JS, which negates the offset in RTL
+   (see goDeal in main.js). The track itself must NOT be row-reversed: an RTL
+   flex container already lays its items right to left on its own, so adding
+   row-reverse on top double-flips the order. Slide 0 looks fine either way
+   because its transform is 0 regardless of sign, which is exactly why this
+   stayed broken unnoticed until someone swiped past the first slide. */
 
 [dir="rtl"] .sheet{left:0;right:auto}
 [dir="rtl"] .lang__m{left:0;right:auto}
@@ -280,7 +294,8 @@
    and the cell centres what is left. */
 .lang__m button b{
   flex:1;min-width:0;
-  font-family:var(--f),'PlexArabic','UrduNaskh','NotoDeva',system-ui,sans-serif;
+  /* Literal 'Manrope', not var(--f), same reason as the block above. */
+  font-family:'Manrope','PlexArabic','UrduNaskh','NotoDeva',system-ui,sans-serif;
   font-size:.92rem;font-weight:600;line-height:1.1;
   color:var(--ink);text-align:left;unicode-bidi:isolate;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

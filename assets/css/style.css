@@ -16,6 +16,14 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:110px}
+/* Without this, a mobile browser has to work out whether a touch is the start
+   of a tap or a scroll before it commits to firing click, and a real finger
+   always has a little sub-pixel drift between touchdown and touchup that a
+   perfectly still automated test never has. That is why the trade in logos
+   could need a second tap on a real phone while every scripted test advanced
+   on the first one: nothing in the click handling itself was ever broken, the
+   browser was just waiting to be told this element is not scrollable. */
+button,a,[role="button"]{touch-action:manipulation}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f);font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:var(--sbar-h)}
 img{max-width:100%;height:auto;display:block}
 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
